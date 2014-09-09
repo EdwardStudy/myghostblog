@@ -9,7 +9,7 @@ config = {
     // ### Development **(default)**
     development: {
         // The url to use when providing links to the site, E.g. in RSS and email.
-        url: 'http://edwardesire.duapp.com',
+        url: 'http://127.0.0.1:2369',
 
         // Example mail config
         // Visit http://support.ghost.org/mail for instructions
@@ -29,11 +29,11 @@ config = {
         database: {
             client: 'mysql',
             connection: {
-                host: 'sqld.duapp.com',
-                port: 4050,
-                user: '1mvH1Ey01Nb8GrqvBuuzVoK3', //your ak
-                password: '8GaZ2zMZOEoDDeOBKb78HCKFvocyFdut', //your sk
-                database: 'ckUkFZMrbIjGidrzbmzq',//your dbname
+                host: '222.31.76.67',
+                port: 3306,
+                user: 'root', //your ak
+                password: '1q2w3e4r', //your sk
+                database: 'ghost',//your dbname
                 charset: 'utf8'
             },
             debug: false
@@ -42,7 +42,7 @@ config = {
             // Host to be passed to node's `net.Server#listen()`
             host: '127.0.0.1',
             // Port to be passed to node's `net.Server#listen()`, for iisnode set this to `process.env.PORT`
-            port: '18080'
+            port: '2368'
         },
         paths: {
             contentPath: path.join(__dirname, '/content/')
@@ -61,23 +61,23 @@ config = {
     // When running Ghost in the wild, use the production environment
     // Configure your URL and mail settings here
     production: {
-        url: 'http://edwardesire.duapp.com',
+        url: 'http://127.0.0.1:2369',
         mail: {},
-        database: {
+            database: {
             client: 'mysql',
             connection: {
-                host: 'sqld.duapp.com',
-                port: 4050,
-                user: '1mvH1Ey01Nb8GrqvBuuzVoK3', //your ak
-                password: '8GaZ2zMZOEoDDeOBKb78HCKFvocyFdut', //your sk
-                database: 'ckUkFZMrbIjGidrzbmzq',//your dbname
+                host: '222.31.76.67',
+                port: 3306,
+                user: 'root', //your ak
+                password: '1q2w3e4r', //your sk
+                database: 'ghost',//your dbname
                 charset: 'utf8'
             },
             debug: false
         },
         server: {
             host: '127.0.0.1',
-            port: '18080'
+            port: '2368'
         },
         qiniu: {
             bucketname: 'edwardsblog',
@@ -104,7 +104,7 @@ config = {
         },
         server: {
             host: '127.0.0.1',
-            port: '18080'
+            port: '2368'
         },
         logging: false
     },
@@ -125,7 +125,7 @@ config = {
         },
         server: {
             host: '127.0.0.1',
-            port: '18080'
+            port: '2368'
         },
         logging: false
     },
