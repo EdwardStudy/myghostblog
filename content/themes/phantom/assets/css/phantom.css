@@ -134,6 +134,28 @@ strong {
 	line-height:90px;
 	margin:0;
 }
+
+
+
+.squadOneNavLink:hover {
+color:#2e9fff;
+}
+.squadOneNavLink {
+color: white;
+text-transform: uppercase;
+border-bottom: none;
+font-size:76%; 
+font-weight: 600;
+padding-left:10px;
+-webkit-transition: color 300ms ease;
+-moz-transition: color 300ms ease;
+-o-transition: color 300ms ease;
+transition: color 300ms ease;
+}
+
+
+
+
 header {
 	position:relative;
 	font-weight:300;
@@ -467,6 +489,7 @@ header .share a {
 		padding:60px 0;
 	}
 	.content {
+		display:none;
 		font-size:18px;
 	}
 	.title h1 {

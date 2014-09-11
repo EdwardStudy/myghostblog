@@ -9,7 +9,7 @@ config = {
     // ### Development **(default)**
     development: {
         // The url to use when providing links to the site, E.g. in RSS and email.
-        url: 'http://127.0.0.1:2369',
+        url: 'http://127.0.0.1:2368',
 
         // Example mail config
         // Visit http://support.ghost.org/mail for instructions
@@ -61,7 +61,7 @@ config = {
     // When running Ghost in the wild, use the production environment
     // Configure your URL and mail settings here
     production: {
-        url: 'http://127.0.0.1:2369',
+        url: 'http://127.0.0.1:2368',
         mail: {},
             database: {
             client: 'mysql',
@@ -95,7 +95,7 @@ config = {
     // Used when developing Ghost to run tests and check the health of Ghost
     // Uses a different port number
     testing: {
-        url: 'http://127.0.0.1:2369',
+        url: 'http://127.0.0.1:2368',
         database: {
             client: 'sqlite3',
             connection: {
@@ -112,7 +112,7 @@ config = {
     // ### Testing MySQL
     // Used by Travis - Automated testing run through GitHub
     'testing-mysql': {
-        url: 'http://127.0.0.1:2369',
+        url: 'http://127.0.0.1:2368',
         database: {
             client: 'mysql',
             connection: {
@@ -133,7 +133,7 @@ config = {
     // ### Testing pg
     // Used by Travis - Automated testing run through GitHub
     'testing-pg': {
-        url: 'http://127.0.0.1:2369',
+        url: 'http://127.0.0.1:2368',
         database: {
             client: 'pg',
             connection: {
