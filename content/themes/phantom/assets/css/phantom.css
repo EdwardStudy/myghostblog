@@ -247,13 +247,15 @@ article {
 	padding:80px 0 40px;
 }
 article pre {
-	overflow:scroll;
+	word-wrap:break-word;
+	word-break:break-all;
+	-moz-binding: url('./wordwrap.xml#wordwrap');
+	overflow: hidden;
 	color:#777;
 	white-space:pre;
 	background:#f2f3f4;
 	border:1px solid #ddd;
 	border-radius:8px;
-	padding:20px;
 }
 article .gist pre {
 	border-radius:0;
