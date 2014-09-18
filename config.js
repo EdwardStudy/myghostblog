@@ -51,7 +51,7 @@ config = {
             bucketname: 'edwardsblog',
             ACCESS_KEY: 'yP2I3wsnk6XvD3fGV_Zl90O2T0JSplfCGRHD4yeg',
             SECRET_KEY: 'R4P8c7VH8HN7rWZamz6IKu2hoBhB2bmDoswi0CQv',
-            root: '/image/',
+            root: '/',
             prefix: 'http://edwardsblog.qiniudn.com'
         },
         updateCheck: false
@@ -83,7 +83,7 @@ config = {
             bucketname: 'edwardsblog',
             ACCESS_KEY: 'yP2I3wsnk6XvD3fGV_Zl90O2T0JSplfCGRHD4yeg',
             SECRET_KEY: 'R4P8c7VH8HN7rWZamz6IKu2hoBhB2bmDoswi0CQv',
-            root: '/image/',
+            root: '/',
             prefix: 'http://edwardsblog.qiniudn.com'
         },
         updateCheck: false
