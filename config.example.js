@@ -29,11 +29,11 @@ config = {
         database: {
             client: 'mysql',
             connection: {
-                host: '222.31.76.67',
+                host: 'rdsjeqrumjeqrum.mysql.rds.aliyuncs.com',
                 port: 3306,
                 user: 'root', //your ak
-                password: '1q2w3e4r', //your sk
-                database: 'ghost',//your dbname
+                password: 'xzdxzd6231', //your sk
+                database: 'r13939k60x18et58',//your dbname
                 charset: 'utf8'
             },
             debug: false
