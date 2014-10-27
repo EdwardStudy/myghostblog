@@ -27,14 +27,9 @@ config = {
         // ```
 
         database: {
-            client: 'mysql',
+            client: 'sqlite3',
             connection: {
-                host: 'rdsjeqrumjeqrum.mysql.rds.aliyuncs.com',
-                port: 3306,
-                user: 'root', //your ak
-                password: 'xzdxzd6231', //your sk
-                database: 'r13939k60x18et58',//your dbname
-                charset: 'utf8'
+                filename: path.join(__dirname, '/content/data/ghost.db')
             },
             debug: false
         },
@@ -72,6 +67,13 @@ config = {
                 password: '1q2w3e4r', //your sk
                 database: 'ghost',//your dbname
                 charset: 'utf8'
+            },
+            debug: false
+        },
+        database: {
+            client: 'sqlite3',
+            connection: {
+                filename: path.join(__dirname, '/content/data/ghost.db')
             },
             debug: false
         },
