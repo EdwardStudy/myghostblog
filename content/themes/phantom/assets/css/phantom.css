@@ -59,9 +59,7 @@
 }
 body {
 	font-family:'Open Sans', 'Helvetica Neue', Helvetica, 'Segoe UI', Arial, sans-serif;
-	-webkit-font-smoothing:antialiased;
 	font-weight:300;
-	cursor:default;
 }
 p, ul, ol {
 	margin-bottom:40px;
@@ -134,28 +132,6 @@ strong {
 	line-height:90px;
 	margin:0;
 }
-
-
-
-.squadOneNavLink:hover {
-color:#2e9fff;
-}
-.squadOneNavLink {
-color: white;
-text-transform: uppercase;
-border-bottom: none;
-font-size:76%; 
-font-weight: 600;
-padding-left:10px;
--webkit-transition: color 300ms ease;
--moz-transition: color 300ms ease;
--o-transition: color 300ms ease;
-transition: color 300ms ease;
-}
-
-
-
-
 header {
 	position:relative;
 	font-weight:300;
@@ -247,10 +223,6 @@ article {
 	padding:80px 0 40px;
 }
 article pre {
-	word-wrap:break-word;
-	word-break:break-all;
-	-moz-binding: url('./wordwrap.xml#wordwrap');
-	overflow: hidden;
 	color:#777;
 	white-space:pre;
 	background:#f2f3f4;
@@ -404,6 +376,24 @@ header .share a {
 .sample .title a, .sample .meta strong {
 	color:#464c4c;
 }
+.blog-cover {
+	padding: 180px 8%;
+	text-align: center;
+}
+.blog-title {
+	font-size: 75px;
+	line-height: 75px;
+	font-weight: 200;
+	position: relative;
+	margin: 0;
+}
+.blog-description {
+	font-weight: 400;
+	max-width: 540px;
+	margin: 10px auto 0;
+	position: relative;
+	font-size: 25px;
+}
 @media (max-width: 992px) {
 	.container, .pagination {
 		width:auto;
@@ -452,7 +442,6 @@ header .share a {
 	}
 	.meta {
 		width:400px;
-		margin-top:20px;
 	}
 	.article-image {
 		width: 100%;
@@ -477,6 +466,14 @@ header .share a {
 	.copyright span {
 		display: block;
 	}
+	.blog-title {
+		font-size: 49px;
+		line-height: 49px;
+	}
+	.blog-description {
+		font-size: 18px;
+		max-width: 400px;
+	}
 }
 @media (max-width: 480px) {
 	p, ul, ol {
@@ -491,7 +488,6 @@ header .share a {
 		padding:60px 0;
 	}
 	.content {
-		display:none;
 		font-size:18px;
 	}
 	.title h1 {
@@ -552,6 +548,14 @@ header .share a {
 	.author .bio {
 		font-size: 13px;
 		line-height: 25px;
+	}
+	.blog-cover {
+		padding: 90px 6%;
+		text-align: left;
+	}
+	.blog-title, .blog-description {
+		max-width: 270px;
+		margin: 10px 0 0 0;
 	}
 }
 @media print {

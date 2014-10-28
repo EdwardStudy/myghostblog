@@ -23,13 +23,11 @@
 
         {{! OpenGraph for Facebook }}
         <meta property="og:title" content="{{meta_title}}" />
-        <meta property="og:image" content="{{@blog.url}}/assets/images/open-graph.png" />
         <meta property="og:locale" content="en_US" />
 
         {{! Twitter Card }}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:title" content="{{meta_title}}" />
-        {{#if @blog.cover}}<meta property="twitter:image" content="{{@blog.cover}}" />{{/if}}
 
         {{! Icons }}
         <link rel="icon" href="http://edwardsblog.qiniudn.com/0/6d/3ad2e76ce64d5f292e1de76f57909.ico" />
@@ -44,6 +42,7 @@
         <link rel="dns-prefetch" href="//fonts.googleapis.com/" />
 
         {{! Scripts and Stylesheets }}
+        <link rel="stylesheet" href="{{asset 'css/normalize.css'}}" />
         <link rel="stylesheet" href="{{asset 'css/basics.css'}}" />
         <link rel="stylesheet" href="{{asset 'css/animate.css'}}" />
         <link rel="stylesheet" href="{{asset 'css/gist.css'}}" />
@@ -53,6 +52,7 @@
 
         {{! 语法高亮 }}
         <link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet"> 
+
         {{! Page-Specific Metadata }}
         {{{block "meta"}}}
 
@@ -67,16 +67,16 @@
                     {{#if @blog.logo}}<img src="{{@blog.logo}}" alt="{{@blog.title}}" />{{/if}}
                 </a>
                 <p class="content">{{@blog.title}}</p><p class="content meta" style="font-size:76%; padding-left:0.5%;">{{@blog.description}}</p>
-               
             </div>
         </nav>
-        <div class="main"> 
+        <div class="main">
             {{{body}}}
         </div>
         <footer class="animated fadeIn" id="footer">
             <div class="container text-center">
                 <p class="copyright"><span>Made by {{@blog.title}}.</span> <span>Powered by Ghost.</span></p>
                 <a href="https://github.com/haydenbleasel/phantom" class="theme">Theme: Phantom by Hayden Bleasel, customized by Zida</a>
+                <br><a class="theme" href="http://www.miitbeian.gov.cn/">京ICP备99999999号</a>
             </div>
         </footer>
 
@@ -89,6 +89,5 @@
         {{! 语法高亮 }}
         <script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
         <script >hljs.initHighlightingOnLoad();</script>  
-
     </body>
 </html>
