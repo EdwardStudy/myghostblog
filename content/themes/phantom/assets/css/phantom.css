@@ -224,7 +224,7 @@ article {
 }
 article pre {
 	color:#777;
-	white-space:pre;
+	white-space:pre-wrap;
 	background:#f2f3f4;
 	border:1px solid #ddd;
 	border-radius:8px;

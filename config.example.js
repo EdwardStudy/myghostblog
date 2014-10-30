@@ -6,10 +6,67 @@ var path = require('path'),
     config;
 
 config = {
+    // ### Production
+    // When running Ghost in the wild, use the production environment
+    // Configure your URL and mail settings here
+    production: {
+        url: 'http://my-ghost-blog.com',
+        mail: {},
+        database: {
+            client: 'mysql',
+            connection: {
+                host: '#######',
+                port: 3306,
+                user: '######', //your ak
+                password: '#######', //your sk
+                database: '########',//your dbname
+                charset: 'utf8'
+            },
+            debug: false,            
+            pool: {
+                min: 0,
+                max: 0
+            }
+        },
+
+        server: {
+            // Host to be passed to node's `net.Server#listen()`
+            host: '0.0.0.0',
+            // Port to be passed to node's `net.Server#listen()`, for iisnode set this to `process.env.PORT`
+            port: '2368'
+        },
+
+        //Storage.Now,we can support `qiniu`,`upyun` and `local-file-store`
+        storage: {
+            provider: 'local-file-store'
+        }
+
+        //or
+        // storage: {
+        //     provider: 'qiniu',
+        //     bucketname: 'your-bucket-name',
+        //     ACCESS_KEY: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        //     SECRET_KEY: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        //     root: '/image/',
+        //     prefix: 'http://your-bucket-name.qiniudn.com'
+        // }
+
+        //or
+        // storage: {
+        //     provider: 'upyun',
+        //     bucketname: 'your-bucket-name',
+        //     username: 'your user name',
+        //     password: 'your password',
+        //     root: '/image/',
+        //     prefix: 'http://your-bucket-name.b0.upaiyun.com'
+        // }
+    },
+
     // ### Development **(default)**
     development: {
         // The url to use when providing links to the site, E.g. in RSS and email.
-        url: 'http://127.0.0.1:2368',
+        // Change this to your Ghost blogs published URL.
+        url: 'http://localhost:2368',
 
         // Example mail config
         // Visit http://support.ghost.org/mail for instructions
@@ -27,68 +84,30 @@ config = {
         // ```
 
         database: {
-            client: 'sqlite3',
+            client: 'mysql',
             connection: {
-                filename: path.join(__dirname, '/content/data/ghost.db')
+                host: '##########',
+                port: 3306,
+                user: '############', //your ak
+                password: '#############', //your sk
+                database: '#############',//your dbname
+                charset: 'utf8'
             },
-            debug: false
+            debug: false,
+            pool: {
+                min: 0,
+                max: 0
+            }
         },
         server: {
             // Host to be passed to node's `net.Server#listen()`
-            host: '127.0.0.1',
+            host: '0.0.0.0',
             // Port to be passed to node's `net.Server#listen()`, for iisnode set this to `process.env.PORT`
             port: '2368'
         },
         paths: {
             contentPath: path.join(__dirname, '/content/')
-        },
-        qiniu: {
-            bucketname: 'edwardsblog',
-            ACCESS_KEY: 'yP2I3wsnk6XvD3fGV_Zl90O2T0JSplfCGRHD4yeg',
-            SECRET_KEY: 'R4P8c7VH8HN7rWZamz6IKu2hoBhB2bmDoswi0CQv',
-            root: '/image/',
-            prefix: 'http://edwardsblog.qiniudn.com'
-        },
-        updateCheck: false
-    },
-
-    // ### Production
-    // When running Ghost in the wild, use the production environment
-    // Configure your URL and mail settings here
-    production: {
-        url: 'http://127.0.0.1:2368',
-        mail: {},
-            database: {
-            client: 'mysql',
-            connection: {
-                host: '222.31.76.67',
-                port: 3306,
-                user: 'root', //your ak
-                password: '1q2w3e4r', //your sk
-                database: 'ghost',//your dbname
-                charset: 'utf8'
-            },
-            debug: false
-        },
-        database: {
-            client: 'sqlite3',
-            connection: {
-                filename: path.join(__dirname, '/content/data/ghost.db')
-            },
-            debug: false
-        },
-        server: {
-            host: '127.0.0.1',
-            port: '2368'
-        },
-        qiniu: {
-            bucketname: 'edwardsblog',
-            ACCESS_KEY: 'yP2I3wsnk6XvD3fGV_Zl90O2T0JSplfCGRHD4yeg',
-            SECRET_KEY: 'R4P8c7VH8HN7rWZamz6IKu2hoBhB2bmDoswi0CQv',
-            root: '/image/',
-            prefix: 'http://edwardsblog.qiniudn.com'
-        },
-        updateCheck: false
+        }
     },
 
     // **Developers only need to edit below here**
@@ -97,7 +116,7 @@ config = {
     // Used when developing Ghost to run tests and check the health of Ghost
     // Uses a different port number
     testing: {
-        url: 'http://127.0.0.1:2368',
+        url: 'http://127.0.0.1:2369',
         database: {
             client: 'sqlite3',
             connection: {
@@ -105,8 +124,8 @@ config = {
             }
         },
         server: {
-            host: '127.0.0.1',
-            port: '2368'
+            host: '0.0.0.0',
+            port: '2369'
         },
         logging: false
     },
@@ -114,7 +133,7 @@ config = {
     // ### Testing MySQL
     // Used by Travis - Automated testing run through GitHub
     'testing-mysql': {
-        url: 'http://127.0.0.1:2368',
+        url: 'http://127.0.0.1:2369',
         database: {
             client: 'mysql',
             connection: {
@@ -126,8 +145,8 @@ config = {
             }
         },
         server: {
-            host: '127.0.0.1',
-            port: '2368'
+            host: '0.0.0.0',
+            port: '2369'
         },
         logging: false
     },
@@ -135,7 +154,7 @@ config = {
     // ### Testing pg
     // Used by Travis - Automated testing run through GitHub
     'testing-pg': {
-        url: 'http://127.0.0.1:2368',
+        url: 'http://127.0.0.1:2369',
         database: {
             client: 'pg',
             connection: {
@@ -147,8 +166,8 @@ config = {
             }
         },
         server: {
-            host: '127.0.0.1',
-            port: '18080'
+            host: '0.0.0.0',
+            port: '2369'
         },
         logging: false
     }

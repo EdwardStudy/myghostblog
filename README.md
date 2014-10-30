@@ -1,3 +1,13 @@
+1. 数据库 node自带的mysql包，如需部署到duapp需替换成百度的包
+2. 主题修改 phantom
+3. 修改内容
+修改excerpts的字数
+拉宽PC端访问的文本框
+
+ps： 每次在新环境下安装ghost，需要清空ghost的数据库。
+
+----------------------------------------------------
+
 # [Ghost](https://github.com/TryGhost/Ghost) [![Build Status](https://travis-ci.org/TryGhost/Ghost.svg?branch=master)](https://travis-ci.org/TryGhost/Ghost)
 
 Ghost is a free, open, simple blogging platform that's available to anyone who wants to use it. Lovingly created and maintained by [John O'Nolan](http://twitter.com/JohnONolan) + [Hannah Wolfe](http://twitter.com/ErisDS) + an amazing group of [contributors](https://github.com/TryGhost/Ghost/contributors).

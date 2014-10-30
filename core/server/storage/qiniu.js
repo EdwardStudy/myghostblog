@@ -1,91 +1,79 @@
-// # Local File System Image Storage module
-// The (default) module for storing images, using the local file system
+// # qiniu CDN support
+// GhostChina.com
 
 var _       = require('lodash'),
     express = require('express'),
     fs      = require('fs-extra'),
-    nodefn  = require('when/node/function'),
     path    = require('path'),
-    when    = require('when'),
+    util    = require('util'),
+    utils   = require('../utils'),
+    Promise = require('bluebird'),
     config = require('../config'),
     errors  = require('../errors'),
     baseStore   = require('./base'),
     crypto = require('crypto'),
 
     qiniu        = require('qiniu'),
-    qiniuConfig  = config.qiniu,
+    qiniuConfig  = config.storage,
     
     qiniuStore;
 
     qiniu.conf.ACCESS_KEY = qiniuConfig.ACCESS_KEY;
     qiniu.conf.SECRET_KEY = qiniuConfig.SECRET_KEY;
-    qiniu.conf.USER_AGENT = 'Ghost 0.4.2';
+    qiniu.conf.USER_AGENT = 'Ghost 0.5.3';
 
 var putPolicy = new qiniu.rs.PutPolicy(qiniuConfig.bucketname),
     uptoken = putPolicy.token();
 
+function QiniuStore () {
+}
 
-qiniuStore = _.extend(baseStore, {
-    // ### Save
-    // Saves the image to storage (the file system)
-    // - image is the express image object
-    // - returns a promise which ultimately returns the full url to the uploaded image
-    'save': function (image) {
-        var saved = when.defer(),
-            md5sum = crypto.createHash('md5'),
-            ext = path.extname(image.name),
-            targetDirRoot = qiniuConfig.root,
-            targetFilename,
-            key,
-            extra = new qiniu.io.PutExtra();
+util.inherits(QiniuStore, baseStore);
 
-        var savedpath = path.join(config.paths.imagesPath, image.name);
+QiniuStore.prototype.save = function (image) {
+    var md5sum = crypto.createHash('md5'),
+        ext = path.extname(image.name),
+        targetDirRoot = qiniuConfig.root,
+        targetFilename,
+        key,
+        extra = new qiniu.io.PutExtra();
 
-        nodefn.call(fs.copy, image.path, savedpath).then(function(){
-        	return nodefn.call(fs.readFile, savedpath);
-        }).then(function(data) {
-            md5 = md5sum.update(data).digest('hex');
+    var savedpath = path.join(config.paths.imagesPath, image.name);
 
-            targetFilename = path.join(targetDirRoot, md5.replace(/^(\w{1})(\w{2})(\w+)$/, '$1/$2/$3')) + ext;
-            targetFilename = targetFilename.replace(/\\/g, '/');
-            key = targetFilename.replace(/^\//, '');
+    return Promise.promisify(fs.copy)(image.path, savedpath).then(function(){
+        return Promise.promisify(fs.readFile)(savedpath);
+    }).then(function(data){
+        md5 = md5sum.update(data).digest('hex');
 
-            return nodefn.call(qiniu.io.put, uptoken, key, data, extra);
-        }).then(function () {
-            return nodefn.call(fs.unlink, savedpath).then(function(){
-            	return nodefn.call(fs.unlink, image.path);
-            }).otherwise(errors.logError);
-        }).then(function () {
-            // prefix + targetFilename
-            var fullUrl = qiniuConfig.prefix + targetFilename;
-            return saved.resolve(fullUrl);
-        }).otherwise(function (e) {
-            errors.logError(e);
-            return saved.reject(e);
-        });
+        targetFilename = path.join(targetDirRoot, md5.replace(/^(\w{1})(\w{2})(\w+)$/, '$1/$2/$3')) + ext;
+        targetFilename = targetFilename.replace(/\\/g, '/');
+        key = targetFilename.replace(/^\//, '');
 
-        return saved.promise;
-    },
+        return Promise.promisify(qiniu.io.put)(uptoken, key, data, extra);
+    }).then(function() {
+        // Remove temp file
+        return Promise.promisify(fs.unlink)(savedpath);
+    }).then(function () {
+        // prefix + targetFilename
+        var fullUrl = qiniuConfig.prefix + targetFilename;
+        return fullUrl;
+    }).catch(function (e) {
+        errors.logError(e);
+        return Promise.reject(e);
+    });
+};
 
-    'exists': function (filename) {
-        // fs.exists does not play nicely with nodefn because the callback doesn't have an error argument
-        var done = when.defer();
-
+QiniuStore.prototype.exists = function (filename) {
+    return new Promise(function (resolve) {
         fs.exists(filename, function (exists) {
-            done.resolve(exists);
+            resolve(exists);
         });
+    });
+};
 
-        return done.promise;
-    },
+QiniuStore.prototype.serve = function (){
+    // For some reason send divides the max age number by 1000
+    return express['static'](config.paths.imagesPath, {maxAge: utils.ONE_YEAR_MS});
+};
 
-    // middleware for serving the files
-    'serve': function () {
-        var ONE_HOUR_MS = 60 * 60 * 1000,
-            ONE_YEAR_MS = 365 * 24 * ONE_HOUR_MS;
-
-        // For some reason send divides the max age number by 1000
-        return express['static'](config.paths.imagesPath, {maxAge: ONE_YEAR_MS});
-    }
-});
-
-module.exports = qiniuStore;
+module.exports = QiniuStore;
