@@ -1,8 +1,13 @@
-1. 数据库 node自带的mysql包，如需部署到duapp需替换成百度的包
-2. 主题修改 phantom
-3. 修改内容
+1. 数据库 node自带的mysql包
+2. 主题源 phantom
+3. 样式优化
 修改excerpts的字数
 拉宽PC端访问的文本框
+修改article样式，修复Tags的链接
+4. 添加内容
+多说评论功能
+站长统计
+
 
 ps： 每次在新环境下安装ghost，需要清空ghost的数据库。
 
