@@ -4,6 +4,7 @@
 修改excerpts的字数
 拉宽PC端访问的文本框
 修改article样式，修复Tags的链接
+修复author的图片
 4. 添加内容
 多说评论功能
 站长统计
