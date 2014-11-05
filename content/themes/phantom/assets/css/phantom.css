@@ -518,6 +518,11 @@ header .share a {
 	}
 }
 @media (max-width: 480px) {
+	img{
+		max-width: 200px;
+		height:	auto;
+		padding-left: 0;
+	}
 	p, ul, ol {
 		margin-bottom:20px;
 		font-size:13px;
