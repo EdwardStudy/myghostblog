@@ -1,4 +1,4 @@
-// Qiniu CDN support
+// Aliyun OSS support
 // Copyright: GhostChina.com
 
 var _       = require('lodash'),
@@ -14,30 +14,27 @@ var _       = require('lodash'),
     baseStore   = require('./base'),
     crypto = require('crypto'),
 
-    qiniu        = require('qiniu'),
-    qiniuConfig  = config.storage,
-    
-    qiniuStore;
+    OSS        = require('aliyun-oss'),
+    ossConfig  = config.storage,
+    option = {
+        accessKeyId: ossConfig.ACCESS_KEY,
+        accessKeySecret: ossConfig.SECRET_KEY
+    };
 
-    qiniu.conf.ACCESS_KEY = qiniuConfig.ACCESS_KEY;
-    qiniu.conf.SECRET_KEY = qiniuConfig.SECRET_KEY;
-    qiniu.conf.USER_AGENT = packageInfo.version;
+var oss = OSS.createClient(option);
 
-var putPolicy = new qiniu.rs.PutPolicy(qiniuConfig.bucketname);
-
-function QiniuStore () {
+function OssStore () {
 }
 
-util.inherits(QiniuStore, baseStore);
+util.inherits(OssStore, baseStore);
 
-QiniuStore.prototype.save = function (image) {
-    var uptoken = putPolicy.token();
+OssStore.prototype.save = function (image) {
     var md5sum = crypto.createHash('md5'),
         ext = path.extname(image.name),
-        targetDirRoot = qiniuConfig.root,
+        targetDirRoot = ossConfig.root,
         targetFilename,
         key,
-        extra = new qiniu.io.PutExtra();
+        fullUrl;
 
     var savedpath = path.join(config.paths.imagesPath, image.name);
 
@@ -50,13 +47,16 @@ QiniuStore.prototype.save = function (image) {
         targetFilename = targetFilename.replace(/\\/g, '/');
         key = targetFilename.replace(/^\//, '');
 
-        return Promise.promisify(qiniu.io.put)(uptoken, key, data, extra);
+        return Promise.promisify(oss.putObject, oss)({
+            bucket: ossConfig.bucketname,
+            object: key, 
+            source: data});
     }).then(function() {
         // Remove temp file
         return Promise.promisify(fs.unlink)(savedpath);
     }).then(function () {
         // prefix + targetFilename
-        var fullUrl = qiniuConfig.prefix + targetFilename;
+        var fullUrl = ossConfig.prefix + targetFilename;
         return fullUrl;
     }).catch(function (e) {
         errors.logError(e);
@@ -64,7 +64,7 @@ QiniuStore.prototype.save = function (image) {
     });
 };
 
-QiniuStore.prototype.exists = function (filename) {
+OssStore.prototype.exists = function (filename) {
     return new Promise(function (resolve) {
         fs.exists(filename, function (exists) {
             resolve(exists);
@@ -72,9 +72,9 @@ QiniuStore.prototype.exists = function (filename) {
     });
 };
 
-QiniuStore.prototype.serve = function (){
+OssStore.prototype.serve = function (){
     // For some reason send divides the max age number by 1000
     return express['static'](config.paths.imagesPath, {maxAge: utils.ONE_YEAR_MS});
 };
 
-module.exports = QiniuStore;
+module.exports = OssStore;

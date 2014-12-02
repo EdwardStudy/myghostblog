@@ -4,47 +4,47 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
 
 
-  data.buffer.push("<li>\n	<a href=\"https://github.com/JohnONolan\" title=\"JohnONolan\">\n		<img src=\"");
+  data.buffer.push("<li>\n    <a href=\"https://github.com/PaulAdamDavis\" title=\"PaulAdamDavis\">\n        <img src=\"");
   data.buffer.push(escapeExpression((helper = helpers['gh-path'] || (depth0 && depth0['gh-path']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data},helper ? helper.call(depth0, "admin", "/img/contributors", options) : helperMissing.call(depth0, "gh-path", "admin", "/img/contributors", options))));
-  data.buffer.push("/JohnONolan\" alt=\"JohnONolan\">\n	</a>\n</li>\n<li>\n	<a href=\"https://github.com/ErisDS\" title=\"ErisDS\">\n		<img src=\"");
+  data.buffer.push("/PaulAdamDavis\" alt=\"PaulAdamDavis\">\n    </a>\n</li>\n<li>\n    <a href=\"https://github.com/halfdan\" title=\"halfdan\">\n        <img src=\"");
   data.buffer.push(escapeExpression((helper = helpers['gh-path'] || (depth0 && depth0['gh-path']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data},helper ? helper.call(depth0, "admin", "/img/contributors", options) : helperMissing.call(depth0, "gh-path", "admin", "/img/contributors", options))));
-  data.buffer.push("/ErisDS\" alt=\"ErisDS\">\n	</a>\n</li>\n<li>\n	<a href=\"https://github.com/PaulAdamDavis\" title=\"PaulAdamDavis\">\n		<img src=\"");
+  data.buffer.push("/halfdan\" alt=\"halfdan\">\n    </a>\n</li>\n<li>\n    <a href=\"https://github.com/ErisDS\" title=\"ErisDS\">\n        <img src=\"");
   data.buffer.push(escapeExpression((helper = helpers['gh-path'] || (depth0 && depth0['gh-path']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data},helper ? helper.call(depth0, "admin", "/img/contributors", options) : helperMissing.call(depth0, "gh-path", "admin", "/img/contributors", options))));
-  data.buffer.push("/PaulAdamDavis\" alt=\"PaulAdamDavis\">\n	</a>\n</li>\n<li>\n	<a href=\"https://github.com/halfdan\" title=\"halfdan\">\n		<img src=\"");
+  data.buffer.push("/ErisDS\" alt=\"ErisDS\">\n    </a>\n</li>\n<li>\n    <a href=\"https://github.com/jaswilli\" title=\"jaswilli\">\n        <img src=\"");
   data.buffer.push(escapeExpression((helper = helpers['gh-path'] || (depth0 && depth0['gh-path']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data},helper ? helper.call(depth0, "admin", "/img/contributors", options) : helperMissing.call(depth0, "gh-path", "admin", "/img/contributors", options))));
-  data.buffer.push("/halfdan\" alt=\"halfdan\">\n	</a>\n</li>\n<li>\n	<a href=\"https://github.com/jaswilli\" title=\"jaswilli\">\n		<img src=\"");
+  data.buffer.push("/jaswilli\" alt=\"jaswilli\">\n    </a>\n</li>\n<li>\n    <a href=\"https://github.com/JohnONolan\" title=\"JohnONolan\">\n        <img src=\"");
   data.buffer.push(escapeExpression((helper = helpers['gh-path'] || (depth0 && depth0['gh-path']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data},helper ? helper.call(depth0, "admin", "/img/contributors", options) : helperMissing.call(depth0, "gh-path", "admin", "/img/contributors", options))));
-  data.buffer.push("/jaswilli\" alt=\"jaswilli\">\n	</a>\n</li>\n<li>\n	<a href=\"https://github.com/felixrieseberg\" title=\"felixrieseberg\">\n		<img src=\"");
+  data.buffer.push("/JohnONolan\" alt=\"JohnONolan\">\n    </a>\n</li>\n<li>\n    <a href=\"https://github.com/novaugust\" title=\"novaugust\">\n        <img src=\"");
   data.buffer.push(escapeExpression((helper = helpers['gh-path'] || (depth0 && depth0['gh-path']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data},helper ? helper.call(depth0, "admin", "/img/contributors", options) : helperMissing.call(depth0, "gh-path", "admin", "/img/contributors", options))));
-  data.buffer.push("/felixrieseberg\" alt=\"felixrieseberg\">\n	</a>\n</li>\n<li>\n	<a href=\"https://github.com/novaugust\" title=\"novaugust\">\n		<img src=\"");
+  data.buffer.push("/novaugust\" alt=\"novaugust\">\n    </a>\n</li>\n<li>\n    <a href=\"https://github.com/felixrieseberg\" title=\"felixrieseberg\">\n        <img src=\"");
   data.buffer.push(escapeExpression((helper = helpers['gh-path'] || (depth0 && depth0['gh-path']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data},helper ? helper.call(depth0, "admin", "/img/contributors", options) : helperMissing.call(depth0, "gh-path", "admin", "/img/contributors", options))));
-  data.buffer.push("/novaugust\" alt=\"novaugust\">\n	</a>\n</li>\n<li>\n	<a href=\"https://github.com/rwjblue\" title=\"rwjblue\">\n		<img src=\"");
+  data.buffer.push("/felixrieseberg\" alt=\"felixrieseberg\">\n    </a>\n</li>\n<li>\n    <a href=\"https://github.com/javorszky\" title=\"javorszky\">\n        <img src=\"");
   data.buffer.push(escapeExpression((helper = helpers['gh-path'] || (depth0 && depth0['gh-path']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data},helper ? helper.call(depth0, "admin", "/img/contributors", options) : helperMissing.call(depth0, "gh-path", "admin", "/img/contributors", options))));
-  data.buffer.push("/rwjblue\" alt=\"rwjblue\">\n	</a>\n</li>\n<li>\n	<a href=\"https://github.com/sebgie\" title=\"sebgie\">\n		<img src=\"");
+  data.buffer.push("/javorszky\" alt=\"javorszky\">\n    </a>\n</li>\n<li>\n    <a href=\"https://github.com/hswolff\" title=\"hswolff\">\n        <img src=\"");
   data.buffer.push(escapeExpression((helper = helpers['gh-path'] || (depth0 && depth0['gh-path']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data},helper ? helper.call(depth0, "admin", "/img/contributors", options) : helperMissing.call(depth0, "gh-path", "admin", "/img/contributors", options))));
-  data.buffer.push("/sebgie\" alt=\"sebgie\">\n	</a>\n</li>\n<li>\n	<a href=\"https://github.com/hswolff\" title=\"hswolff\">\n		<img src=\"");
+  data.buffer.push("/hswolff\" alt=\"hswolff\">\n    </a>\n</li>\n<li>\n    <a href=\"https://github.com/cobbspur\" title=\"cobbspur\">\n        <img src=\"");
   data.buffer.push(escapeExpression((helper = helpers['gh-path'] || (depth0 && depth0['gh-path']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data},helper ? helper.call(depth0, "admin", "/img/contributors", options) : helperMissing.call(depth0, "gh-path", "admin", "/img/contributors", options))));
-  data.buffer.push("/hswolff\" alt=\"hswolff\">\n	</a>\n</li>\n<li>\n	<a href=\"https://github.com/morficus\" title=\"morficus\">\n		<img src=\"");
+  data.buffer.push("/cobbspur\" alt=\"cobbspur\">\n    </a>\n</li>\n<li>\n    <a href=\"https://github.com/mattiascibien\" title=\"mattiascibien\">\n        <img src=\"");
   data.buffer.push(escapeExpression((helper = helpers['gh-path'] || (depth0 && depth0['gh-path']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data},helper ? helper.call(depth0, "admin", "/img/contributors", options) : helperMissing.call(depth0, "gh-path", "admin", "/img/contributors", options))));
-  data.buffer.push("/morficus\" alt=\"morficus\">\n	</a>\n</li>\n<li>\n	<a href=\"https://github.com/javorszky\" title=\"javorszky\">\n		<img src=\"");
+  data.buffer.push("/mattiascibien\" alt=\"mattiascibien\">\n    </a>\n</li>\n<li>\n    <a href=\"https://github.com/jillesme\" title=\"jillesme\">\n        <img src=\"");
   data.buffer.push(escapeExpression((helper = helpers['gh-path'] || (depth0 && depth0['gh-path']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data},helper ? helper.call(depth0, "admin", "/img/contributors", options) : helperMissing.call(depth0, "gh-path", "admin", "/img/contributors", options))));
-  data.buffer.push("/javorszky\" alt=\"javorszky\">\n	</a>\n</li>\n<li>\n	<a href=\"https://github.com/cobbspur\" title=\"cobbspur\">\n		<img src=\"");
+  data.buffer.push("/jillesme\" alt=\"jillesme\">\n    </a>\n</li>\n<li>\n    <a href=\"https://github.com/dbalders\" title=\"dbalders\">\n        <img src=\"");
   data.buffer.push(escapeExpression((helper = helpers['gh-path'] || (depth0 && depth0['gh-path']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data},helper ? helper.call(depth0, "admin", "/img/contributors", options) : helperMissing.call(depth0, "gh-path", "admin", "/img/contributors", options))));
-  data.buffer.push("/cobbspur\" alt=\"cobbspur\">\n	</a>\n</li>\n<li>\n	<a href=\"https://github.com/jillesme\" title=\"jillesme\">\n		<img src=\"");
+  data.buffer.push("/dbalders\" alt=\"dbalders\">\n    </a>\n</li>\n<li>\n    <a href=\"https://github.com/RaoHai\" title=\"RaoHai\">\n        <img src=\"");
   data.buffer.push(escapeExpression((helper = helpers['gh-path'] || (depth0 && depth0['gh-path']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data},helper ? helper.call(depth0, "admin", "/img/contributors", options) : helperMissing.call(depth0, "gh-path", "admin", "/img/contributors", options))));
-  data.buffer.push("/jillesme\" alt=\"jillesme\">\n	</a>\n</li>\n<li>\n	<a href=\"https://github.com/jgable\" title=\"jgable\">\n		<img src=\"");
+  data.buffer.push("/RaoHai\" alt=\"RaoHai\">\n    </a>\n</li>\n<li>\n    <a href=\"https://github.com/sebgie\" title=\"sebgie\">\n        <img src=\"");
   data.buffer.push(escapeExpression((helper = helpers['gh-path'] || (depth0 && depth0['gh-path']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data},helper ? helper.call(depth0, "admin", "/img/contributors", options) : helperMissing.call(depth0, "gh-path", "admin", "/img/contributors", options))));
-  data.buffer.push("/jgable\" alt=\"jgable\">\n	</a>\n</li>\n<li>\n	<a href=\"https://github.com/SiR-DanieL\" title=\"SiR-DanieL\">\n		<img src=\"");
+  data.buffer.push("/sebgie\" alt=\"sebgie\">\n    </a>\n</li>\n<li>\n    <a href=\"https://github.com/jgable\" title=\"jgable\">\n        <img src=\"");
   data.buffer.push(escapeExpression((helper = helpers['gh-path'] || (depth0 && depth0['gh-path']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data},helper ? helper.call(depth0, "admin", "/img/contributors", options) : helperMissing.call(depth0, "gh-path", "admin", "/img/contributors", options))));
-  data.buffer.push("/SiR-DanieL\" alt=\"SiR-DanieL\">\n	</a>\n</li>\n<li>\n	<a href=\"https://github.com/mattiascibien\" title=\"mattiascibien\">\n		<img src=\"");
+  data.buffer.push("/jgable\" alt=\"jgable\">\n    </a>\n</li>\n<li>\n    <a href=\"https://github.com/rwjblue\" title=\"rwjblue\">\n        <img src=\"");
   data.buffer.push(escapeExpression((helper = helpers['gh-path'] || (depth0 && depth0['gh-path']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data},helper ? helper.call(depth0, "admin", "/img/contributors", options) : helperMissing.call(depth0, "gh-path", "admin", "/img/contributors", options))));
-  data.buffer.push("/mattiascibien\" alt=\"mattiascibien\">\n	</a>\n</li>\n<li>\n	<a href=\"https://github.com/wjake\" title=\"wjake\">\n		<img src=\"");
+  data.buffer.push("/rwjblue\" alt=\"rwjblue\">\n    </a>\n</li>\n<li>\n    <a href=\"https://github.com/morficus\" title=\"morficus\">\n        <img src=\"");
   data.buffer.push(escapeExpression((helper = helpers['gh-path'] || (depth0 && depth0['gh-path']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data},helper ? helper.call(depth0, "admin", "/img/contributors", options) : helperMissing.call(depth0, "gh-path", "admin", "/img/contributors", options))));
-  data.buffer.push("/wjake\" alt=\"wjake\">\n	</a>\n</li>\n<li>\n	<a href=\"https://github.com/shindakun\" title=\"shindakun\">\n		<img src=\"");
+  data.buffer.push("/morficus\" alt=\"morficus\">\n    </a>\n</li>\n<li>\n    <a href=\"https://github.com/IanMitchell\" title=\"IanMitchell\">\n        <img src=\"");
   data.buffer.push(escapeExpression((helper = helpers['gh-path'] || (depth0 && depth0['gh-path']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data},helper ? helper.call(depth0, "admin", "/img/contributors", options) : helperMissing.call(depth0, "gh-path", "admin", "/img/contributors", options))));
-  data.buffer.push("/shindakun\" alt=\"shindakun\">\n	</a>\n</li>\n<li>\n	<a href=\"https://github.com/manuelmitasch\" title=\"manuelmitasch\">\n		<img src=\"");
+  data.buffer.push("/IanMitchell\" alt=\"IanMitchell\">\n    </a>\n</li>\n<li>\n    <a href=\"https://github.com/iBotPeaches\" title=\"iBotPeaches\">\n        <img src=\"");
   data.buffer.push(escapeExpression((helper = helpers['gh-path'] || (depth0 && depth0['gh-path']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data},helper ? helper.call(depth0, "admin", "/img/contributors", options) : helperMissing.call(depth0, "gh-path", "admin", "/img/contributors", options))));
-  data.buffer.push("/manuelmitasch\" alt=\"manuelmitasch\">\n	</a>\n</li>");
+  data.buffer.push("/iBotPeaches\" alt=\"iBotPeaches\">\n    </a>\n</li>");
   return buffer;
   
 }); });
@@ -127,22 +127,23 @@ function program8(depth0,data) {
   }
 function program9(depth0,data) {
   
-  var buffer = '', stack1;
+  var buffer = '';
   data.buffer.push("\r\n            <div class=\"image\"><img ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
-    'src': ("session.user.image")
-  },hashTypes:{'src': "STRING"},hashContexts:{'src': depth0},contexts:[],types:[],data:data})));
-  data.buffer.push(" alt=\"");
-  stack1 = helpers._triageMustache.call(depth0, "session.user.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("'s profile picture\" /></div>\r\n            ");
+    'src': ("session.user.image"),
+    'alt': ("userImageAlt")
+  },hashTypes:{'src': "ID",'alt': "ID"},hashContexts:{'src': depth0,'alt': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(" /></div>\r\n            ");
   return buffer;
   }
 
 function program11(depth0,data) {
   
-  
-  data.buffer.push("\r\n            <div class=\"image\"><img src=\"/shared/img/user-image.png\" alt=\"Profile picture\" /></div>\r\n            ");
+  var buffer = '', helper, options;
+  data.buffer.push("\r\n            <div class=\"image\"><img src=\"");
+  data.buffer.push(escapeExpression((helper = helpers['gh-path'] || (depth0 && depth0['gh-path']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data},helper ? helper.call(depth0, "blog", "shared/img/user-image.png", options) : helperMissing.call(depth0, "gh-path", "blog", "shared/img/user-image.png", options))));
+  data.buffer.push("\" alt=\"Profile picture\" /></div>\r\n            ");
+  return buffer;
   }
 
 function program13(depth0,data) {
@@ -192,7 +193,7 @@ function program16(depth0,data) {
   data.buffer.push("\r\n\r\n    ");
   stack1 = helpers.unless.call(depth0, "session.user.isAuthor", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n\r\n    \r\n\r\n    <div class=\"nav-item user-menu\" data-href=\"#\">\r\n        ");
+  data.buffer.push("\r\n\r\n    \r\n\r\n    <div class=\"nav-item user-menu\">\r\n        ");
   stack1 = (helper = helpers['gh-dropdown-button'] || (depth0 && depth0['gh-dropdown-button']),options={hash:{
     'dropdownName': ("user-menu"),
     'tagName': ("div"),
@@ -220,7 +221,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 
   data.buffer.push("<footer id=\"publish-bar\">\r\n    <div class=\"publish-bar-inner\">\r\n        ");
   data.buffer.push(escapeExpression((helper = helpers.render || (depth0 && depth0.render),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "post-tags-input", options) : helperMissing.call(depth0, "render", "post-tags-input", options))));
-  data.buffer.push("\r\n\r\n        <div class=\"publish-bar-actions\">\r\n            <button type=\"button\" class='post-settings' ");
+  data.buffer.push("\r\n\r\n        <div class=\"publish-bar-actions\">\r\n            <button type=\"button\" class=\"post-settings\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "toggleSettingsMenu", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push("></button>\r\n            ");
   data.buffer.push(escapeExpression(helpers.view.call(depth0, "editor-save-button", {hash:{
@@ -415,7 +416,7 @@ function program5(depth0,data) {
   return buffer;
   }
 
-  data.buffer.push("<div id=\"modal-container\" class=\"js-modal-container\" ");
+  data.buffer.push("<div class=\"modal-container js-modal-container\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "closeModal", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push(">\r\n    <article ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
@@ -681,8 +682,9 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
     'openModal': ("openModal"),
     'typingPause': ("autoSave"),
     'focus': ("shouldFocusEditor"),
+    'focusCursorAtEnd': ("model.isDirty"),
     'onFocusIn': ("autoSaveNew")
-  },hashTypes:{'value': "ID",'scrollInfo': "ID",'setCodeMirror': "STRING",'openModal': "STRING",'typingPause': "STRING",'focus': "ID",'onFocusIn': "STRING"},hashContexts:{'value': depth0,'scrollInfo': depth0,'setCodeMirror': depth0,'openModal': depth0,'typingPause': depth0,'focus': depth0,'onFocusIn': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "gh-codemirror", options))));
+  },hashTypes:{'value': "ID",'scrollInfo': "ID",'setCodeMirror': "STRING",'openModal': "STRING",'typingPause': "STRING",'focus': "ID",'focusCursorAtEnd': "ID",'onFocusIn': "STRING"},hashContexts:{'value': depth0,'scrollInfo': depth0,'setCodeMirror': depth0,'openModal': depth0,'typingPause': depth0,'focus': depth0,'focusCursorAtEnd': depth0,'onFocusIn': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "gh-codemirror", options))));
   data.buffer.push("\r\n        </section>\r\n    </section>\r\n\r\n    <section ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'class': (":entry-preview :js-entry-preview isPreview:active")
@@ -886,8 +888,12 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 
 function program1(depth0,data) {
   
-  
-  data.buffer.push("\r\n\r\n    <p>此操作不可逆！没有备份、不能恢复、没有后悔药。 <br /> 这是最后警告！小心！</p>\r\n\r\n");
+  var buffer = '', stack1;
+  data.buffer.push("\r\n\r\n    <p>即将删除 \"<strong>");
+  stack1 = helpers._triageMustache.call(depth0, "model.title", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</strong>\"。<br />此操作不可逆！没有备份、不能恢复、没有后悔药。 <br /> 这是最后警告！小心！</p>\r\n\r\n");
+  return buffer;
   }
 
   stack1 = (helper = helpers['gh-modal-dialog'] || (depth0 && depth0['gh-modal-dialog']),options={hash:{
@@ -1115,10 +1121,9 @@ function program1(depth0,data) {
     'value': ("slugValue"),
     'name': ("post-setting-slug"),
     'focus-out': ("updateSlug"),
-    'placeholder': ("slugPlaceholder"),
     'selectOnClick': ("true"),
     'stopEnterKeyDownPropagation': ("true")
-  },hashTypes:{'class': "STRING",'id': "STRING",'value': "ID",'name': "STRING",'focus-out': "STRING",'placeholder': "ID",'selectOnClick': "STRING",'stopEnterKeyDownPropagation': "STRING"},hashContexts:{'class': depth0,'id': depth0,'value': depth0,'name': depth0,'focus-out': depth0,'placeholder': depth0,'selectOnClick': depth0,'stopEnterKeyDownPropagation': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "gh-input", options))));
+  },hashTypes:{'class': "STRING",'id': "STRING",'value': "ID",'name': "STRING",'focus-out': "STRING",'selectOnClick': "STRING",'stopEnterKeyDownPropagation': "STRING"},hashContexts:{'class': depth0,'id': depth0,'value': depth0,'name': depth0,'focus-out': depth0,'selectOnClick': depth0,'stopEnterKeyDownPropagation': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "gh-input", options))));
   data.buffer.push("\r\n                </span>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <label for=\"post-setting-date\">发布日期</label>\r\n                <span class=\"input-icon icon-calendar\">\r\n                    ");
   data.buffer.push(escapeExpression((helper = helpers['gh-input'] || (depth0 && depth0['gh-input']),options={hash:{
     'class': ("post-setting-date"),
@@ -1126,9 +1131,8 @@ function program1(depth0,data) {
     'value': ("publishedAtValue"),
     'name': ("post-setting-date"),
     'focus-out': ("setPublishedAt"),
-    'placeholder': ("publishedAtPlaceholder"),
     'stopEnterKeyDownPropagation': ("true")
-  },hashTypes:{'class': "STRING",'id': "STRING",'value': "ID",'name': "STRING",'focus-out': "STRING",'placeholder': "ID",'stopEnterKeyDownPropagation': "STRING"},hashContexts:{'class': depth0,'id': depth0,'value': depth0,'name': depth0,'focus-out': depth0,'placeholder': depth0,'stopEnterKeyDownPropagation': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "gh-input", options))));
+  },hashTypes:{'class': "STRING",'id': "STRING",'value': "ID",'name': "STRING",'focus-out': "STRING",'stopEnterKeyDownPropagation': "STRING"},hashContexts:{'class': depth0,'id': depth0,'value': depth0,'name': depth0,'focus-out': depth0,'stopEnterKeyDownPropagation': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "gh-input", options))));
   data.buffer.push("\r\n                </span>\r\n            </div>\r\n\r\n            ");
   stack1 = helpers.unless.call(depth0, "session.user.isAuthor", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
@@ -1179,14 +1183,14 @@ function program2(depth0,data) {
   
   var buffer = '';
   data.buffer.push("\r\n            <div class=\"form-group for-select\">\r\n                <label for=\"author-list\">作者</label>\r\n                <span class=\"input-icon icon-user\">\r\n                    <span class=\"gh-select\" tabindex=\"0\">\r\n                    ");
-  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Ember.Select", {hash:{
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "select", {hash:{
     'name': ("post-setting-author"),
     'id': ("author-list"),
     'content': ("authors"),
     'optionValuePath': ("content.id"),
     'optionLabelPath': ("content.name"),
     'selection': ("selectedAuthor")
-  },hashTypes:{'name': "STRING",'id': "STRING",'content': "ID",'optionValuePath': "STRING",'optionLabelPath': "STRING",'selection': "ID"},hashContexts:{'name': depth0,'id': depth0,'content': depth0,'optionValuePath': depth0,'optionLabelPath': depth0,'selection': depth0},contexts:[depth0],types:["ID"],data:data})));
+  },hashTypes:{'name': "STRING",'id': "STRING",'content': "ID",'optionValuePath': "STRING",'optionLabelPath': "STRING",'selection': "ID"},hashContexts:{'name': depth0,'id': depth0,'content': depth0,'optionValuePath': depth0,'optionLabelPath': depth0,'selection': depth0},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push("\r\n                    </span>\r\n                </span>\r\n            </div>\r\n            ");
   return buffer;
   }
@@ -1194,7 +1198,7 @@ function program2(depth0,data) {
 function program4(depth0,data) {
   
   
-  data.buffer.push("\r\n                    <a href=\"#\">\r\n                        <b>搜索引擎优化</b>\r\n                        <span>优化在搜索引擎中的呈现效果，提高访问量。</span>\r\n                    </a>\r\n                ");
+  data.buffer.push("\r\n                    <button type=\"button\">\r\n                        <b>搜索引擎优化</b>\r\n                        <span>优化在搜索引擎中的呈现效果，提高访问量。</span>\r\n                    </button>\r\n                ");
   }
 
 function program6(depth0,data) {
@@ -1394,7 +1398,11 @@ function program11(depth0,data) {
 
   data.buffer.push("<header class=\"page-header\">\r\n    <button class=\"menu-button js-menu-button\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "toggleGlobalMobileNav", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
-  data.buffer.push("><span class=\"sr-only\">Menu</span></button>\r\n    <h2 class=\"page-title\">Content</h2>\r\n</header>\r\n\r\n<div class=\"page-content\">\r\n    <section class=\"content-list js-content-list\">\r\n        <header class=\"floatingheader\">\r\n            <section class=\"content-filter\">\r\n                <small>所有博文</small>\r\n            </section>\r\n            ");
+  data.buffer.push("><span class=\"sr-only\">Menu</span></button>\r\n    <h2 class=\"page-title\">Content</h2>\r\n</header>\r\n\r\n<div class=\"page-content\">\r\n    <section ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': (":content-list :js-content-list postListFocused:keyboard-focused")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\r\n        <header class=\"floatingheader\">\r\n            <section class=\"content-filter\">\r\n                <small>所有博文</small>\r\n            </section>\r\n            ");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{
     'class': ("btn btn-green"),
     'title': ("新建博文")
@@ -1406,7 +1414,11 @@ function program11(depth0,data) {
     'classNames': ("content-list-content")
   },hashTypes:{'tagName': "STRING",'classNames': "STRING"},hashContexts:{'tagName': depth0,'classNames': depth0},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["STRING"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n    </section>\r\n    <section class=\"content-preview js-content-preview\">\r\n        ");
+  data.buffer.push("\r\n    </section>\r\n    <section ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': (":content-preview :js-content-preview postContentFocused:keyboard-focused")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push(">\r\n        ");
   stack1 = helpers._triageMustache.call(depth0, "outlet", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n    </section>\r\n</div>\r\n");
@@ -1578,6 +1590,9 @@ function program1(depth0,data) {
   data.buffer.push("\r\n                ");
   stack1 = helpers.unless.call(depth0, "session.user.isEditor", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(2, program2, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n\r\n                \r\n                ");
+  stack1 = helpers['if'].call(depth0, "showTags", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n                ");
   data.buffer.push(escapeExpression((helper = helpers['gh-activating-list-item'] || (depth0 && depth0['gh-activating-list-item']),options={hash:{
     'route': ("settings.users"),
@@ -1595,6 +1610,19 @@ function program2(depth0,data) {
     'route': ("settings.general"),
     'title': ("全局设置"),
     'classNames': ("settings-nav-general icon-settings")
+  },hashTypes:{'route': "STRING",'title': "STRING",'classNames': "STRING"},hashContexts:{'route': depth0,'title': depth0,'classNames': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "gh-activating-list-item", options))));
+  data.buffer.push("\r\n                ");
+  return buffer;
+  }
+
+function program4(depth0,data) {
+  
+  var buffer = '', helper, options;
+  data.buffer.push("\r\n                    ");
+  data.buffer.push(escapeExpression((helper = helpers['gh-activating-list-item'] || (depth0 && depth0['gh-activating-list-item']),options={hash:{
+    'route': ("settings.tags"),
+    'title': ("Tags"),
+    'classNames': ("settings-nav-tags icon-tag")
   },hashTypes:{'route': "STRING",'title': "STRING",'classNames': "STRING"},hashContexts:{'route': depth0,'title': depth0,'classNames': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "gh-activating-list-item", options))));
   data.buffer.push("\r\n                ");
   return buffer;
@@ -1827,7 +1855,7 @@ function program9(depth0,data) {
     'autocapitalize': ("off"),
     'autocorrect': ("off")
   },hashTypes:{'id': "STRING",'name': "STRING",'type': "STRING",'value': "ID",'autocapitalize': "STRING",'autocorrect': "STRING"},hashContexts:{'id': depth0,'name': depth0,'type': depth0,'value': depth0,'autocapitalize': depth0,'autocorrect': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
-  data.buffer.push("\r\n                <p>用来接收 Ghost 博客发出的重要通知</p>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <label for=\"postsPerPage\">每页显示博文数</label>\r\n                ");
+  data.buffer.push("\r\n                <p>用来接收 Ghost 博客发出的重要通知</p>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <label for=\"postsPerPage\">每页显示博文数</label>\r\n                \r\n                ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'id': ("postsPerPage"),
     'name': ("general[postsPerPage]"),
@@ -1835,8 +1863,9 @@ function program9(depth0,data) {
     'value': ("postsPerPage"),
     'min': ("1"),
     'max': ("1000"),
-    'type': ("number")
-  },hashTypes:{'id': "STRING",'name': "STRING",'focus-out': "STRING",'value': "ID",'min': "STRING",'max': "STRING",'type': "STRING"},hashContexts:{'id': depth0,'name': depth0,'focus-out': depth0,'value': depth0,'min': depth0,'max': depth0,'type': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+    'type': ("number"),
+    'pattern': ("[0-9]*")
+  },hashTypes:{'id': "STRING",'name': "STRING",'focus-out': "STRING",'value': "ID",'min': "STRING",'max': "STRING",'type': "STRING",'pattern': "STRING"},hashContexts:{'id': depth0,'name': depth0,'focus-out': depth0,'value': depth0,'min': depth0,'max': depth0,'type': depth0,'pattern': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
   data.buffer.push("\r\n                <p>设置每页显示博文的数量</p>\r\n            </div>\r\n\r\n            <div class=\"form-group for-checkbox\">\r\n                <label for=\"permalinks\">博文地址</label>\r\n                <label class=\"checkbox\" for=\"permalinks\">\r\n                    ");
   data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
     'id': ("permalinks"),
@@ -1849,7 +1878,7 @@ function program9(depth0,data) {
     'data-select-text': ("selectedTheme.label")
   },hashTypes:{'data-select-text': "ID"},hashContexts:{'data-select-text': depth0},contexts:[],types:[],data:data})));
   data.buffer.push(" tabindex=\"0\">\r\n                   ");
-  data.buffer.push(escapeExpression(helpers.view.call(depth0, "Ember.Select", {hash:{
+  data.buffer.push(escapeExpression(helpers.view.call(depth0, "select", {hash:{
     'id': ("activeTheme"),
     'name': ("general[activeTheme]"),
     'content': ("themes"),
@@ -1857,8 +1886,86 @@ function program9(depth0,data) {
     'optionLabelPath': ("content.label"),
     'value': ("activeTheme"),
     'selection': ("selectedTheme")
-  },hashTypes:{'id': "STRING",'name': "STRING",'content': "ID",'optionValuePath': "STRING",'optionLabelPath': "STRING",'value': "ID",'selection': "ID"},hashContexts:{'id': depth0,'name': depth0,'content': depth0,'optionValuePath': depth0,'optionLabelPath': depth0,'value': depth0,'selection': depth0},contexts:[depth0],types:["ID"],data:data})));
+  },hashTypes:{'id': "STRING",'name': "STRING",'content': "ID",'optionValuePath': "STRING",'optionLabelPath': "STRING",'value': "ID",'selection': "ID"},hashContexts:{'id': depth0,'name': depth0,'content': depth0,'optionValuePath': depth0,'optionLabelPath': depth0,'value': depth0,'selection': depth0},contexts:[depth0],types:["STRING"],data:data})));
   data.buffer.push("\r\n               </span>\r\n                <p>为你的博客选择一个喜欢的主题</p>\r\n            </div>\r\n        </fieldset>\r\n    </form>\r\n</section>");
+  return buffer;
+  
+}); });
+
+define('ghost/templates/settings/tags', ['exports'], function(__exports__){ __exports__['default'] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = '', stack1;
+  data.buffer.push("\r\n     <div class=\"settings-tag\">\r\n         <button ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "editTag", "tag", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push(" class=\"tag-title\">");
+  stack1 = helpers._triageMustache.call(depth0, "tag.name", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</button>\r\n         <span class=\"label label-default\">/");
+  stack1 = helpers._triageMustache.call(depth0, "tag.slug", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</span>\r\n         <p class=\"tag-description\">");
+  stack1 = helpers._triageMustache.call(depth0, "tag.description", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</p>\r\n         <span class=\"tags-count\">N/A</span>\r\n     </div>\r\n ");
+  return buffer;
+  }
+
+  data.buffer.push("<header class=\"settings-view-header\">\r\n    <a class=\"btn btn-default btn-back active\" href=\"/ghost/settings/\">Back</a>\r\n    <h2 class=\"page-title\">Tags</h2>\r\n    <section class=\"page-actions\">\r\n        <button type=\"button\" class=\"btn btn-green\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "newTag", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">New Tag</button>\r\n    </section>\r\n</header>\r\n\r\n<section class=\"content settings-tags\">\r\n ");
+  stack1 = helpers.each.call(depth0, "tag", "in", "tags", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0,depth0,depth0],types:["ID","ID","ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n</section>\r\n");
+  return buffer;
+  
+}); });
+
+define('ghost/templates/settings/tags/settings-menu', ['exports'], function(__exports__){ __exports__['default'] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = '';
+  data.buffer.push("\r\n                <button class=\"btn btn-red icon-trash\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "deleteTag", "activeTag", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push(">Delete Tag</button>\r\n                ");
+  return buffer;
+  }
+
+  data.buffer.push("<div class=\"content-cover\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "closeTagEditor", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push("></div>\r\n<div class=\"settings-menu-container\">\r\n    <div class=\"settings-menu settings-menu-pane settings-menu-pane-in\">\r\n        <div class=\"settings-menu-header\">\r\n            <h4>Tag Settings</h4>\r\n            <button class=\"close icon-x settings-menu-header-action\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "closeTagEditor", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["STRING"],data:data})));
+  data.buffer.push(">\r\n                <span class=\"hidden\">Close</span>\r\n            </button>\r\n        </div>\r\n        <div class=\"settings-menu-content\">\r\n            <form>\r\n                <div class=\"form-group\">\r\n                    <label>Tag Name</label>\r\n                    ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'type': ("text"),
+    'value': ("activeTag.name")
+  },hashTypes:{'type': "STRING",'value': "ID"},hashContexts:{'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <label>Slug</label>\r\n                    ");
+  data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{
+    'type': ("text"),
+    'value': ("activeTag.slug")
+  },hashTypes:{'type': "STRING",'value': "ID"},hashContexts:{'type': depth0,'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "input", options))));
+  data.buffer.push("\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <label>Description</label>\r\n                    ");
+  data.buffer.push(escapeExpression((helper = helpers.textarea || (depth0 && depth0.textarea),options={hash:{
+    'value': ("activeTag.description")
+  },hashTypes:{'value': "ID"},hashContexts:{'value': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "textarea", options))));
+  data.buffer.push("\r\n                </div>\r\n\r\n                ");
+  stack1 = helpers.unless.call(depth0, "activeTag.isNew", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\r\n                <button class=\"btn btn-green tag-save-button\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "saveTag", "activeTag", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","ID"],data:data})));
+  data.buffer.push(">");
+  stack1 = helpers._triageMustache.call(depth0, "view.saveText", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("</button>\r\n            </form>\r\n        </div>\r\n    </div>\r\n</div>\r\n");
   return buffer;
   
 }); });
@@ -1892,7 +1999,7 @@ function program1(depth0,data) {
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n        <h2 class=\"page-title\">用户列表</h2>\r\n        <section class=\"page-actions\">\r\n            <button class=\"btn btn-green\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "openModal", "invite-new-user", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["STRING","STRING"],data:data})));
-  data.buffer.push(" >邀请新用户</button>\r\n        </section>\r\n    </header>\r\n\r\n    ");
+  data.buffer.push(" >邀请新用户</button>\r\n        </section>\r\n    </header>\r\n\r\n    <section class=\"content settings-users\">\r\n\r\n    ");
   stack1 = helpers['if'].call(depth0, "invitedUsers", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n\r\n    <section class=\"user-list active-users\">\r\n\r\n        <h4 class=\"user-list-title\">已接受邀请的用户</h4>\r\n\r\n        ");
@@ -1900,7 +2007,7 @@ function program1(depth0,data) {
     'itemController': ("settings/users/user")
   },hashTypes:{'itemController': "STRING"},hashContexts:{'itemController': depth0},inverse:self.noop,fn:self.program(10, program10, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\r\n\r\n    </section>\r\n");
+  data.buffer.push("\r\n\r\n    </section>\r\n\r\n    </section>\r\n\r\n");
   return buffer;
   }
 function program2(depth0,data) {
@@ -2004,10 +2111,7 @@ function program13(depth0,data) {
   return buffer;
   }
 
-  stack1 = helpers.view.call(depth0, "settings/users/users-list-view", {hash:{
-    'tagName': ("section"),
-    'class': ("content settings-users")
-  },hashTypes:{'tagName': "STRING",'class': "STRING"},hashContexts:{'tagName': depth0,'class': depth0},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data});
+  stack1 = helpers.view.call(depth0, "settings/users/users-list-view", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\r\n");
   return buffer;

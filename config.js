@@ -29,7 +29,12 @@ config = {
 
         //Storage.Now,we can support `qiniu`,`upyun` and `local-file-store`
         storage: {
-            provider: 'local-file-store'
+            provider: 'qiniu',
+            bucketname: 'edwardsblog',
+            ACCESS_KEY: 'yP2I3wsnk6XvD3fGV_Zl90O2T0JSplfCGRHD4yeg',
+            SECRET_KEY: 'R4P8c7VH8HN7rWZamz6IKu2hoBhB2bmDoswi0CQv',
+            root: '/image/',
+            prefix: 'http://edwardsblog.qiniudn.com'
         }
 
         //or
@@ -75,20 +80,11 @@ config = {
         // ```
 
         database: {
-            client: 'mysql',
+            client: 'sqlite3',
             connection: {
-                host: '##########',
-                port: 3306,
-                user: '############', //your ak
-                password: '#############', //your sk
-                database: '#############',//your dbname
-                charset: 'utf8'
+                filename: path.join(__dirname, '/content/data/ghost.db')
             },
-            debug: false,
-            pool: {
-                min: 0,
-                max: 0
-            }
+            debug: false
         },
         server: {
             // Host to be passed to node's `net.Server#listen()`
