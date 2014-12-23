@@ -1,13 +1,15 @@
 var _              = require('lodash'),
     Promise        = require('bluebird'),
     errors         = require('../errors'),
+    utils          = require('../utils'),
     bcrypt         = require('bcryptjs'),
     ghostBookshelf = require('./base'),
-    http           = require('http'),
     crypto         = require('crypto'),
     validator      = require('validator'),
+    request        = require('request'),
     validation     = require('../data/validation'),
     config         = require('../config'),
+    sitemap        = require('../data/sitemap'),
 
     bcryptGenSalt  = Promise.promisify(bcrypt.genSalt),
     bcryptHash     = Promise.promisify(bcrypt.hash),
@@ -22,7 +24,7 @@ var _              = require('lodash'),
 function validatePasswordLength(password) {
     try {
         if (!validator.isLength(password, 8)) {
-            throw new Error('密码至少8个字符。');
+            throw new errors.ValidationError('密码至少8个字符。');
         }
     } catch (error) {
         return Promise.reject(error);
@@ -41,6 +43,20 @@ function generatePasswordHash(password) {
 User = ghostBookshelf.Model.extend({
 
     tableName: 'users',
+
+    initialize: function () {
+        ghostBookshelf.Model.prototype.initialize.apply(this, arguments);
+
+        this.on('created', function (model) {
+            sitemap.userAdded(model);
+        });
+        this.on('updated', function (model) {
+            sitemap.userEdited(model);
+        });
+        this.on('destroyed', function (model) {
+            sitemap.userDeleted(model);
+        });
+    },
 
     saving: function (newPage, attr, options) {
         /*jshint unused:false*/
@@ -92,6 +108,16 @@ User = ghostBookshelf.Model.extend({
         delete attrs.password;
 
         return attrs;
+    },
+
+    format: function (options) {
+        if (!_.isEmpty(options.website) &&
+            !validator.isURL(options.website, {
+            require_protocol: true,
+            protocols: ['http', 'https']})) {
+            options.website = 'http://' + options.website;
+        }
+        return options;
     },
 
     posts: function () {
@@ -148,7 +174,7 @@ User = ghostBookshelf.Model.extend({
      */
     findAll:  function (options) {
         options = options || {};
-        options.withRelated = _.union(['roles'], options.include);
+        options.withRelated = _.union(options.withRelated, options.include);
         return ghostBookshelf.Model.findAll.call(this, options);
     },
 
@@ -227,7 +253,7 @@ User = ghostBookshelf.Model.extend({
         }
 
         // Add related objects
-        options.withRelated = _.union(['roles'], options.include);
+        options.withRelated = _.union(options.withRelated, options.include);
 
         // only include a limit-query if a numeric limit is provided
         if (_.isNumber(options.limit)) {
@@ -283,7 +309,7 @@ User = ghostBookshelf.Model.extend({
             // Format response of data
             .then(function (resp) {
                 var totalUsers = parseInt(resp[0].aggregate, 10),
-                    calcPages = Math.ceil(totalUsers / options.limit),
+                    calcPages = Math.ceil(totalUsers / options.limit) || 0,
                     pagination = {},
                     meta = {},
                     data = {};
@@ -346,7 +372,7 @@ User = ghostBookshelf.Model.extend({
         delete data.status;
 
         options = options || {};
-        options.withRelated = _.union(['roles'], options.include);
+        options.withRelated = _.union(options.withRelated, options.include);
 
         // Support finding by role
         if (data.role) {
@@ -387,7 +413,7 @@ User = ghostBookshelf.Model.extend({
             roleId;
 
         options = options || {};
-        options.withRelated = _.union(['roles'], options.include);
+        options.withRelated = _.union(options.withRelated, options.include);
 
         return ghostBookshelf.Model.edit.call(this, data, options).then(function (user) {
             if (data.roles) {
@@ -439,7 +465,7 @@ User = ghostBookshelf.Model.extend({
             roles;
 
         options = this.filterOptions(options, 'add');
-        options.withRelated = _.union(['roles'], options.include);
+        options.withRelated = _.union(options.withRelated, options.include);
 
         return ghostBookshelf.model('Role').findOne({name: 'Author'}, _.pick(options, 'transacting')).then(function (authorRole) {
             // Get the role we're going to assign to this user, or the author role if there isn't one
@@ -492,7 +518,7 @@ User = ghostBookshelf.Model.extend({
             userData = this.filterData(data);
 
         options = this.filterOptions(options, 'setup');
-        options.withRelated = _.union(['roles'], options.include);
+        options.withRelated = _.union(options.withRelated, options.include);
         options.shortSlug = true;
 
         return validatePasswordLength(userData.password).then(function () {
@@ -519,12 +545,16 @@ User = ghostBookshelf.Model.extend({
             userModel = userModelOrId,
             origArgs;
 
-        // If we passed in an id instead of a model, get the model then check the permissions
+        // If we passed in a model without its related roles, we need to fetch it again
+        if (_.isObject(userModelOrId) && !_.isObject(userModelOrId.related('roles'))) {
+            userModelOrId = userModelOrId.id;
+        }
+        // If we passed in an id instead of a model get the model first
         if (_.isNumber(userModelOrId) || _.isString(userModelOrId)) {
             // Grab the original args without the first one
             origArgs = _.toArray(arguments).slice(1);
             // Get the actual post model
-            return this.findOne({id: userModelOrId, status: 'all'}).then(function (foundUserModel) {
+            return this.findOne({id: userModelOrId, status: 'all'}, {include: ['roles']}).then(function (foundUserModel) {
                 // Build up the original args but substitute with actual model
                 var newArgs = [foundUserModel].concat(origArgs);
 
@@ -657,25 +687,33 @@ User = ghostBookshelf.Model.extend({
      * @param {String} oldPassword
      * @param {String} newPassword
      * @param {String} ne2Password
+     * @param {Integer} userId
      * @param {Object} options
      */
-    changePassword: function (oldPassword, newPassword, ne2Password, options) {
+    changePassword: function (oldPassword, newPassword, ne2Password, userId, options) {
         var self = this,
-            userid = options.context.user,
             user = null;
 
         if (newPassword !== ne2Password) {
-            return Promise.reject(new Error('两次输入的新密码不匹配'));
+            return Promise.reject(new errors.ValidationError('两次输入的新密码不匹配'));
+        }
+
+        if (userId === options.context.user && _.isEmpty(oldPassword)) {
+            return Promise.reject(new errors.ValidationError('此操作必须输入密码'));
         }
 
         return validatePasswordLength(newPassword).then(function () {
-            return self.forge({id: userid}).fetch({require: true});
+            return self.forge({id: userId}).fetch({require: true});
         }).then(function (_user) {
             user = _user;
-            return bcryptCompare(oldPassword, user.get('password'));
+            if (userId === options.context.user) {
+                return bcryptCompare(oldPassword, user.get('password'));
+            }
+            // if user is admin, password isn't compared
+            return true;
         }).then(function (matched) {
             if (!matched) {
-                return Promise.reject(new Error('密码错误'));
+                return Promise.reject(new errors.ValidationError('密码错误'));
             }
             return bcryptGenSalt();
         }).then(function (salt) {
@@ -697,14 +735,12 @@ User = ghostBookshelf.Model.extend({
 
             // Token:
             // BASE64(TIMESTAMP + email + HASH(TIMESTAMP + email + oldPasswordHash + dbHash ))
-
             hash.update(String(expires));
             hash.update(email.toLocaleLowerCase());
             hash.update(foundUser.get('password'));
             hash.update(String(dbHash));
 
             text += [expires, email, hash.digest('base64')].join('|');
-
             return new Buffer(text).toString('base64');
         });
     },
@@ -777,14 +813,18 @@ User = ghostBookshelf.Model.extend({
 
         return validatePasswordLength(newPassword).then(function () {
             // Validate the token; returns the email address from token
-            return self.validateToken(token, dbHash);
+            return self.validateToken(utils.decodeBase64URLsafe(token), dbHash);
         }).then(function (email) {
             // Fetch the user by email, and hash the password at the same time.
             return Promise.join(
-                self.forge({email: email.toLocaleLowerCase()}).fetch({require: true}),
+                self.getByEmail(email),
                 generatePasswordHash(newPassword)
             );
         }).then(function (results) {
+            if (!results[0]) {
+                return Promise.reject(new Error('User not found'));
+            }
+
             // Update the user with the new password hash
             var foundUser = results[0],
                 passwordHash = results[1];
@@ -805,19 +845,19 @@ User = ghostBookshelf.Model.extend({
             return ghostBookshelf.model('Role').findOne({name: 'Owner'});
         }).then(function (result) {
             ownerRole = result;
-            return User.findOne({id: options.context.user});
+            return User.findOne({id: options.context.user}, {include: ['roles']});
         }).then(function (ctxUser) {
             // check if user has the owner role
             var currentRoles = ctxUser.toJSON().roles;
-            if (!_.contains(currentRoles, ownerRole.id)) {
-                return Promise.reject(new errors.NoPermissionError('只有博客业主才可转移博客的所有权。'));
+            if (!_.any(currentRoles, {id: ownerRole.id})) {
+                return Promise.reject(new errors.NoPermissionError('只有博客所有者才可转移博客的所有权。'));
             }
             contextUser = ctxUser;
-            return User.findOne({id: object.id});
+            return User.findOne({id: object.id}, {include: ['roles']});
         }).then(function (user) {
             var currentRoles = user.toJSON().roles;
-            if (!_.contains(currentRoles, adminRole.id)) {
-                return Promise.reject(new errors.ValidationError('只有管理员才可以被指定为博客业主。'));
+            if (!_.any(currentRoles, {id: adminRole.id})) {
+                return Promise.reject(new errors.ValidationError('只有管理员才可以被指定为博客所有者。'));
             }
 
             assignUser = user;
@@ -842,17 +882,19 @@ User = ghostBookshelf.Model.extend({
 
         return new Promise(function (resolve) {
             if (config.isPrivacyDisabled('useGravatar')) {
-                resolve(userData);
+                return resolve(userData);
             }
 
-            http.get('http:' + gravatarUrl, function (res) {
-                if (res.statusCode !== 404) {
+            request({url: 'http:' + gravatarUrl, timeout: 2000}, function (err, response) {
+                if (err) {
+                    // just resolve with no image url
+                    return resolve(userData);
+                }
+
+                if (response.statusCode !== 404) {
                     userData.image = gravatarUrl;
                 }
 
-                resolve(userData);
-            }).on('error', function () {
-                // Error making request just continue.
                 resolve(userData);
             });
         });

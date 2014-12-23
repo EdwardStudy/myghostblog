@@ -13,8 +13,15 @@ adminControllers = {
         /*jslint unparam:true*/
 
         function renderIndex() {
-            res.render('default', {
-                skip_google_fonts: config.isPrivacyDisabled('useGoogleFonts')
+            return api.configuration.browse().then(function (data) {
+                var apiConfig = _.omit(data.configuration, function (value) {
+                    return _.contains(['environment', 'database', 'mail', 'version'], value.key);
+                });
+
+                res.render('default', {
+                    skip_google_fonts: config.isPrivacyDisabled('useGoogleFonts'),
+                    configuration: apiConfig
+                });
             });
         }
 
@@ -30,8 +37,8 @@ adminControllers = {
                 location: 'top',
                 dismissible: false,
                 status: 'persistent',
-                message: '有 <a href="http://www.ghostchina.com/download/">Ghost ' + updateVersion +
-                '</a> 新版本可以升级！请赶紧 <a href="http://www.ghostchina.com/" target="_blank">升级</a> 吧。'
+                message: '有 <a href="http://www.ghostchina.com/download/" target="_blank">Ghost ' + updateVersion +
+                '</a> 新版本可以升级！请赶紧 <a href="http://www.ghostchina.com/download/" target="_blank">升级</a> 吧。'
             };
 
             return api.notifications.browse({context: {internal: true}}).then(function (results) {

@@ -30,12 +30,11 @@ var crypto   = require('crypto'),
     api      = require('./api'),
     config   = require('./config'),
     errors   = require('./errors'),
-    packageInfo = require('../../package.json'),
 
     internal = {context: {internal: true}},
     allowedCheckEnvironments = ['development', 'production'],
     checkEndpoint = 'updates.ghostchina.com',
-    currentVersion = packageInfo.version;
+    currentVersion = config.ghostVersion;
 
 function updateCheckError(error) {
     api.settings.edit(
@@ -95,6 +94,8 @@ function updateCheckData() {
         data.user_count      = users && users.users && users.users.length ? users.users.length : 0;
         data.blog_created_at = users && users.users && users.users[0] && users.users[0].created_at ? moment(users.users[0].created_at).unix() : '';
         data.npm_version     = _.isArray(npm) && npm[0] ? npm[0].toString().replace(/\n/, '') : '';
+        data.storage         = (config.storage && config.storage.provider) || 'local-file-store';
+        data.blog_url         = config.url;
 
         return data;
     }).catch(updateCheckError);

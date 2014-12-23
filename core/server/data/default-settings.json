@@ -61,11 +61,17 @@
                 "matches": "(:id|:slug|:year|:month|:day)",
                 "notContains": "/ghost/"
             }
+        },
+        "ghost_head": {
+            "defaultValue" : ""
+        },
+        "ghost_foot": {
+            "defaultValue" : ""
         }
     },
     "theme": {
         "activeTheme": {
-            "defaultValue": "casper"
+            "defaultValue": "casper-zh"
         }
     },
     "app": {
