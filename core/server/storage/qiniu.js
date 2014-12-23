@@ -1,5 +1,5 @@
-// Qiniu CDN support
-// Copyright: GhostChina.com
+// # qiniu CDN support
+// GhostChina.com
 
 var _       = require('lodash'),
     express = require('express'),
@@ -9,7 +9,6 @@ var _       = require('lodash'),
     utils   = require('../utils'),
     Promise = require('bluebird'),
     config = require('../config'),
-    packageInfo   = require('../../../package.json'),
     errors  = require('../errors'),
     baseStore   = require('./base'),
     crypto = require('crypto'),
@@ -21,9 +20,10 @@ var _       = require('lodash'),
 
     qiniu.conf.ACCESS_KEY = qiniuConfig.ACCESS_KEY;
     qiniu.conf.SECRET_KEY = qiniuConfig.SECRET_KEY;
-    qiniu.conf.USER_AGENT = packageInfo.version;
+    qiniu.conf.USER_AGENT = 'Ghost 0.5.3';
 
-var putPolicy = new qiniu.rs.PutPolicy(qiniuConfig.bucketname);
+var putPolicy = new qiniu.rs.PutPolicy(qiniuConfig.bucketname),
+    uptoken = putPolicy.token();
 
 function QiniuStore () {
 }
@@ -31,7 +31,6 @@ function QiniuStore () {
 util.inherits(QiniuStore, baseStore);
 
 QiniuStore.prototype.save = function (image) {
-    var uptoken = putPolicy.token();
     var md5sum = crypto.createHash('md5'),
         ext = path.extname(image.name),
         targetDirRoot = qiniuConfig.root,

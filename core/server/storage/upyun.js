@@ -1,5 +1,5 @@
-// Upyun CDN support
-// Copyright: GhostChina.com
+// # Upyun CDN support
+// GhostChina.com
 
 var _       = require('lodash'),
     express = require('express'),
@@ -39,6 +39,7 @@ UpyunStore.prototype.save = function (image) {
 
         return Promise.promisify(upyun.uploadFile, upyun)(targetFilename, data, '', false, {});
     }).then(function(response) {
+        console.log('Response code: ' + response.statusCode);
         // Remove temp file
         return Promise.promisify(fs.unlink)(savedpath);
     }).then(function () {

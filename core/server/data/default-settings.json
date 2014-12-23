@@ -65,7 +65,7 @@
     },
     "theme": {
         "activeTheme": {
-            "defaultValue": "casper-zh"
+            "defaultValue": "casper"
         }
     },
     "app": {

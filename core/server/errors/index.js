@@ -107,13 +107,7 @@ errors = {
 
         stack = err ? err.stack : null;
 
-        if (!_.isString(err)) {
-            if (_.isObject(err) && _.isString(err.message)) {
-                err = err.message;
-            } else {
-                err = 'An unknown error occurred.';
-            }
-        }
+        err = _.isString(err) ? err : (_.isObject(err) ? err.message : 'An unknown error occurred.');
 
         // Overwrite error to provide information that this is probably a permission problem
         // TODO: https://github.com/TryGhost/Ghost/issues/3687

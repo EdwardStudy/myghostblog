@@ -40,8 +40,6 @@ coreHelpers.post_class = require('./post_class');
 coreHelpers.tags = require('./tags');
 coreHelpers.title = require('./title');
 coreHelpers.url = require('./url');
-coreHelpers.image = require('./image');
-coreHelpers.tag_cloud = require('./tag_cloud');
 
 coreHelpers.ghost_script_tags = require('./ghost_script_tags');
 
@@ -69,20 +67,6 @@ coreHelpers.apps = function (context, options) {
     /*jshint unused:false*/
     if (config.hasOwnProperty('apps')) {
         return config.apps.toString();
-    }
-    return 'false';
-};
-
-// ### TagsUI helper
-//
-// *Usage example:*
-// `{{tags_ui}}`
-//
-// Returns the config value for tagsUI or false if no value present
-coreHelpers.tags_ui = function (context, options) {
-    /*jshint unused:false*/
-    if (config.hasOwnProperty('tagsUI')) {
-        return config.tagsUI.toString();
     }
     return 'false';
 };
@@ -162,16 +146,12 @@ registerHelpers = function (adminHbs) {
     registerAsyncThemeHelper('meta_title', coreHelpers.meta_title);
     registerAsyncThemeHelper('post_class', coreHelpers.post_class);
     registerAsyncThemeHelper('url', coreHelpers.url);
-    registerAsyncThemeHelper('image', coreHelpers.image);
-    registerAsyncThemeHelper('tag_cloud', coreHelpers.tag_cloud);
 
     // Register admin helpers
     registerAdminHelper('ghost_script_tags', coreHelpers.ghost_script_tags);
     registerAdminHelper('asset', coreHelpers.asset);
     registerAdminHelper('apps', coreHelpers.apps);
     registerAdminHelper('file_storage', coreHelpers.file_storage);
-    registerAdminHelper('tags_ui', coreHelpers.tags_ui);
-
     registerAdminHelper('blog_url', coreHelpers.blog_url);
 };
 

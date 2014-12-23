@@ -3,9 +3,9 @@ var _              = require('lodash'),
     errors         = require('../errors'),
     bcrypt         = require('bcryptjs'),
     ghostBookshelf = require('./base'),
+    http           = require('http'),
     crypto         = require('crypto'),
     validator      = require('validator'),
-    request        = require('request'),
     validation     = require('../data/validation'),
     config         = require('../config'),
 
@@ -92,16 +92,6 @@ User = ghostBookshelf.Model.extend({
         delete attrs.password;
 
         return attrs;
-    },
-
-    format: function (options) {
-        if (!_.isEmpty(options.website) &&
-            !validator.isURL(options.website, {
-            require_protocol: true,
-            protocols: ['http', 'https']})) {
-            options.website = 'http://' + options.website;
-        }
-        return options;
     },
 
     posts: function () {
@@ -706,7 +696,7 @@ User = ghostBookshelf.Model.extend({
                 text = '';
 
             // Token:
-            // BASE64(TIMESTAMP + email + HASH(TIMESTAMP + email + oldPasswordHash + dbHash )).replace('=', '-')
+            // BASE64(TIMESTAMP + email + HASH(TIMESTAMP + email + oldPasswordHash + dbHash ))
 
             hash.update(String(expires));
             hash.update(email.toLocaleLowerCase());
@@ -715,19 +705,13 @@ User = ghostBookshelf.Model.extend({
 
             text += [expires, email, hash.digest('base64')].join('|');
 
-            // it's possible that the token might get URI encoded, which breaks it
-            // we replace any `=`s with `-`s as they aren't valid base64 characters
-            // but are valid in a URL, so won't suffer encoding issues
-            return new Buffer(text).toString('base64').replace('=', '-');
+            return new Buffer(text).toString('base64');
         });
     },
 
     validateToken: function (token, dbHash) {
         /*jslint bitwise:true*/
         // TODO: Is there a chance the use of ascii here will cause problems if oldPassword has weird characters?
-        // We replaced `=`s with `-`s when we sent the token via email, so
-        // now we reverse that change to get a valid base64 string to decode
-        token = token.replace('-', '=');
         var tokenText = new Buffer(token, 'base64').toString('ascii'),
             parts,
             expires,
@@ -797,14 +781,10 @@ User = ghostBookshelf.Model.extend({
         }).then(function (email) {
             // Fetch the user by email, and hash the password at the same time.
             return Promise.join(
-                self.getByEmail(email),
+                self.forge({email: email.toLocaleLowerCase()}).fetch({require: true}),
                 generatePasswordHash(newPassword)
             );
         }).then(function (results) {
-            if (!results[0]) {
-                return Promise.reject(new Error('User not found'));
-            }
-
             // Update the user with the new password hash
             var foundUser = results[0],
                 passwordHash = results[1];
@@ -830,14 +810,14 @@ User = ghostBookshelf.Model.extend({
             // check if user has the owner role
             var currentRoles = ctxUser.toJSON().roles;
             if (!_.contains(currentRoles, ownerRole.id)) {
-                return Promise.reject(new errors.NoPermissionError('只有博客所有者才可转移博客的所有权。'));
+                return Promise.reject(new errors.NoPermissionError('只有博客业主才可转移博客的所有权。'));
             }
             contextUser = ctxUser;
             return User.findOne({id: object.id});
         }).then(function (user) {
             var currentRoles = user.toJSON().roles;
             if (!_.contains(currentRoles, adminRole.id)) {
-                return Promise.reject(new errors.ValidationError('只有管理员才可以被指定为博客所有者。'));
+                return Promise.reject(new errors.ValidationError('只有管理员才可以被指定为博客业主。'));
             }
 
             assignUser = user;
@@ -865,16 +845,14 @@ User = ghostBookshelf.Model.extend({
                 resolve(userData);
             }
 
-            request({url: 'http:' + gravatarUrl, timeout: 2000}, function (err, response) {
-                if (err) {
-                    // just resolve with no image url
-                    return resolve(userData);
-                }
-
-                if (response.statusCode !== 404) {
+            http.get('http:' + gravatarUrl, function (res) {
+                if (res.statusCode !== 404) {
                     userData.image = gravatarUrl;
                 }
 
+                resolve(userData);
+            }).on('error', function () {
+                // Error making request just continue.
                 resolve(userData);
             });
         });

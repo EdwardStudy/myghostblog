@@ -3,7 +3,7 @@ var _              = require('lodash'),
     uuid           = require('node-uuid'),
     Promise        = require('bluebird'),
     errors         = require('../errors'),
-    Showdown       = require('showdown-ghost'),
+    Showdown       = require('showdown'),
     ghostgfm       = require('../../shared/lib/showdown/extensions/ghostgfm'),
     converter      = new Showdown.converter({extensions: [ghostgfm]}),
     ghostBookshelf = require('./base'),
@@ -248,9 +248,7 @@ Post = ghostBookshelf.Model.extend({
      */
     findAll:  function (options) {
         options = options || {};
-
-        // fetch relations passed to options.include
-        options.withRelated = options.include;
+        options.withRelated = _.union(['tags', 'fields'], options.include);
         return ghostBookshelf.Model.findAll.call(this, options);
     },
 

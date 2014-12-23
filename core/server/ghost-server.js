@@ -8,8 +8,7 @@ var Promise = require('bluebird'),
 function GhostServer(rootApp) {
     this.rootApp = rootApp;
     this.httpServer = null;
-    this.connections = {};
-    this.connectionId = 0;
+    this.connections = [];
     this.upgradeWarning = setTimeout(this.logUpgradeWarning.bind(this), 5000);
 
     // Expose config module for use externally.
@@ -17,30 +16,15 @@ function GhostServer(rootApp) {
 }
 
 GhostServer.prototype.connection = function (socket) {
-    var self = this;
-
-    self.connectionId += 1;
-    socket._ghostId = self.connectionId;
-
-    socket.on('close', function () {
-        delete self.connections[this._ghostId];
-    });
-
-    self.connections[socket._ghostId] = socket;
+    this.connections.push(socket);
 };
 
-// Most browsers keep a persistent connection open to the server
+// Most browsers keep a persistant connection open to the server
 // which prevents the close callback of httpServer from returning
 // We need to destroy all connections manually
 GhostServer.prototype.closeConnections = function () {
-    var self = this;
-
-    Object.keys(self.connections).forEach(function (socketId) {
-        var socket = self.connections[socketId];
-
-        if (socket) {
-            socket.destroy();
-        }
+    this.connections.forEach(function (socket) {
+        socket.destroy();
     });
 };
 
@@ -67,6 +51,15 @@ GhostServer.prototype.logStartMessages = function () {
             config.url,
             '\nCtrl+C to shut down'.grey
         );
+
+        // ensure that Ghost exits correctly on Ctrl+C
+        process.removeAllListeners('SIGINT').on('SIGINT', function () {
+            console.log(
+                '\nGhost has shut down'.red,
+                '\nYour blog is now offline'
+            );
+            process.exit(0);
+        });
     } else {
         console.log(
             ('Ghost is running in ' + process.env.NODE_ENV + '...').green,
@@ -76,27 +69,17 @@ GhostServer.prototype.logStartMessages = function () {
             config.url,
             '\nCtrl+C to shut down'.grey
         );
-    }
-
-    function shutdown() {
-        console.log('\nGhost has shut down'.red);
-        if (process.env.NODE_ENV === 'production') {
+        // ensure that Ghost exits correctly on Ctrl+C
+        process.removeAllListeners('SIGINT').on('SIGINT', function () {
             console.log(
-                '\nYour blog is now offline'
-            );
-        } else {
-            console.log(
+                '\nGhost has shutdown'.red,
                 '\nGhost was running for',
                 Math.round(process.uptime()),
                 'seconds'
             );
-        }
-        process.exit(0);
+            process.exit(0);
+        });
     }
-    // ensure that Ghost exits correctly on Ctrl+C and SIGTERM
-    process.
-        removeAllListeners('SIGINT').on('SIGINT', shutdown).
-        removeAllListeners('SIGTERM').on('SIGTERM', shutdown);
 };
 
 GhostServer.prototype.logShutdownMessages = function () {
