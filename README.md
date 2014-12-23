@@ -3,6 +3,10 @@
 3. 修改内容
 修改excerpts的字数
 拉宽PC端访问的文本框
+修改article样式，修复Tags的链接
+修复author的图片
+参照Casper主题实现分页功能
+4. 添加内容 多说评论功能 站长统计
 
 ps： 每次在新环境下安装ghost，需要清空ghost的数据库。
 
