@@ -91,6 +91,14 @@ config = {
             // Port to be passed to node's `net.Server#listen()`, for iisnode set this to `process.env.PORT`
             port: '2368'
         },
+        storage: {
+            provider: 'qiniu',
+            bucketname: 'edwardsblog',
+            ACCESS_KEY: 'yP2I3wsnk6XvD3fGV_Zl90O2T0JSplfCGRHD4yeg',
+            SECRET_KEY: 'R4P8c7VH8HN7rWZamz6IKu2hoBhB2bmDoswi0CQv',
+            root: '/image/',
+            prefix: 'http://edwardsblog.qiniudn.com'
+        },
         paths: {
             contentPath: path.join(__dirname, '/content/')
         }
