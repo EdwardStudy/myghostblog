@@ -11,6 +11,12 @@ $(function () {
     // Expanded article images
     $('article img').parent().addClass('article-image');
 
+    //use lightbox to popup img
+    $('article img').parent().attr('rel', 'lightbox');
+    $('.article-image img').each(function(index){
+        $(this).wrap('<a href="' +$(this).prop('src')+ '"  rel="lightbox"></a>');
+    });
+
     // Custom transform and opacity modifier for Stellar.js
     $.stellar.positionProperty.transfade = {
         setPosition: function (element, newLeft, originalLeft, newTop, originalTop) {
