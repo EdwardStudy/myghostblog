@@ -47,13 +47,14 @@
         <link rel="stylesheet" href="{{asset 'css/animate.css'}}" />
         <link rel="stylesheet" href="{{asset 'css/gist.css'}}" />
         <link rel="stylesheet" href="{{asset 'css/phantom.css'}}" />
-        {{! lightbox }}
-        <link rel="stylesheet" href="{{asset 'css/lightbox.css'}}"/>
         <script src="{{asset 'js/html5shiv-printshiv.js'}}"></script>
         <script src="{{asset 'js/respond.js'}}"></script>
 
         {{! 语法高亮 }}
-        <link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet"> 
+        <link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">
+
+        {{! lightbox }}
+        <link rel="stylesheet" href="{{asset 'css/lightbox.css'}}"/>
 
         {{! Page-Specific Metadata }}
         {{{block "meta"}}}
@@ -92,12 +93,12 @@
         <script src="{{asset 'js/fastclick.js'}}"></script>
         <script src="{{asset 'js/stellar.js'}}"></script>
         <script src="{{asset 'js/phantom.js'}}"></script>
+        {{! 语法高亮 }}
+        <script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
+        <script >hljs.initHighlightingOnLoad();</script>
         {{! lightbox}}
         <script src="{{asset 'js/jquery-1.11.2.min.js'}}"></script>
         <script src="{{asset 'js/lightbox.min.js'}}"></script>
-        {{! 语法高亮 }}
-        <script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
-        <script >hljs.initHighlightingOnLoad();</script>  
         {{! 站长统计 需修改}}
         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id=''%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s23.cnzz.com/stat.php%3Fid%3D1253503981%26show%3Dpic2' type='text/javascript'%3E%3C/script%3E"));</script>
     </body>
