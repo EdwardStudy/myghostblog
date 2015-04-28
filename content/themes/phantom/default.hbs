@@ -67,7 +67,10 @@
                     {{#if @blog.logo}}<img src="{{@blog.logo}}" alt="{{@blog.title}}" />{{/if}}
                 </a>
                 <p class="content">{{@blog.title}}</p><p class="content desc" style="font-size:76%; padding-left:0.5%;">{{@blog.description}}</p>
+                {{! 添加导航栏 }}
+                {{navigation}}
             </div>
+
         </nav>
         <div class="main">
             {{{body}}}
@@ -76,7 +79,7 @@
             <div class="container text-center">
                 <p class="copyright"><span>Made by {{@blog.title}}.</span> <span>Powered by Ghost.</span></p>
                 <a href="https://github.com/haydenbleasel/phantom" class="theme">Theme: Phantom by Hayden Bleasel, customized by Zida</a>
-                <br><a class="theme" href="http://www.miitbeian.gov.cn/">京ICP备14046809号</a>
+                <br><a class="theme" href="http://www.miitbeian.gov.cn/">ICP备号</a>
 
             </div>
         </footer>
@@ -91,6 +94,6 @@
         <script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
         <script >hljs.initHighlightingOnLoad();</script>  
         {{! 站长统计 需修改}}
-        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253503981'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s23.cnzz.com/stat.php%3Fid%3D1253503981%26show%3Dpic2' type='text/javascript'%3E%3C/script%3E"));</script>
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id=''%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s23.cnzz.com/stat.php%3Fid%3D1253503981%26show%3Dpic2' type='text/javascript'%3E%3C/script%3E"));</script>
     </body>
 </html>

@@ -43,7 +43,7 @@ GhostMailer.prototype.from = function () {
         if (!config.theme.title) {
             config.theme.title = 'Ghost at ' + this.getDomain();
         }
-        from = config.theme.title + ' <' + from + '>';
+        from = '"' + config.theme.title + '" <' + from + '>';
     }
 
     return from;
@@ -56,7 +56,7 @@ GhostMailer.prototype.getDomain = function () {
 };
 
 // Sends an e-mail message enforcing `to` (blog owner) and `from` fields
-// This assumes that api.settings.read('email') was aready done on the API level
+// This assumes that api.settings.read('email') was already done on the API level
 GhostMailer.prototype.send = function (message) {
     var self = this,
         to,
