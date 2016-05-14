@@ -47,8 +47,10 @@
         <link rel="stylesheet" href="{{asset 'css/animate.css'}}" />
         <link rel="stylesheet" href="{{asset 'css/gist.css'}}" />
         <link rel="stylesheet" href="{{asset 'css/phantom.css'}}" />
-        <script src="{{asset 'js/html5shiv-printshiv.js'}}"></script>
-        <script src="{{asset 'js/respond.js'}}"></script>
+        <!--[if lt IE 9]>
+            <script src="bower_components/html5shiv/dist/html5shiv.js"></script>           
+            <script src="{{asset 'js/respond.js'}}"></script>
+        <![endif]-->
 
         {{! 语法高亮 }}
         <link href="https://cdn.bootcss.com/highlight.js/8.9.1/styles/monokai_sublime.min.css" rel="stylesheet">        
