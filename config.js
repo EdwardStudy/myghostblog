@@ -10,31 +10,34 @@ config = {
     // When running Ghost in the wild, use the production environment
     // Configure your URL and mail settings here
     production: {
-        url: 'http://www.edwardesire.com',
+        url: '',
         mail: {},
         database: {
-            client: 'sqlite3',
+            client: '',
             connection: {
-                filename: path.join(__dirname, '/content/data/ghost.db')
-            },
-            debug: false
+                host     : '',
+                user     : '',
+                password : '',
+                database : '',
+                charset  : ''
+            }
         },
 
         server: {
             // Host to be passed to node's `net.Server#listen()`
-            host: '0.0.0.0',
+            host: '',
             // Port to be passed to node's `net.Server#listen()`, for iisnode set this to `process.env.PORT`
-            port: '2368'
+            port: ''
         },
 
         //Storage.Now,we can support `qiniu`,`upyun` and `local-file-store`
         storage: {
-            provider: 'qiniu',
-            bucketname: 'edwardsblog',
-            ACCESS_KEY: 'yP2I3wsnk6XvD3fGV_Zl90O2T0JSplfCGRHD4yeg',
-            SECRET_KEY: 'R4P8c7VH8HN7rWZamz6IKu2hoBhB2bmDoswi0CQv',
-            root: '/image/',
-            prefix: 'http://edwardsblog.qiniudn.com'
+            provider: '',
+            bucketname: '',
+            ACCESS_KEY: '',
+            SECRET_KEY: '',
+            root: '',
+            prefix: ''
         }
 
         //or
@@ -62,7 +65,7 @@ config = {
     development: {
         // The url to use when providing links to the site, E.g. in RSS and email.
         // Change this to your Ghost blogs published URL.
-        url: 'http://localhost:2368',
+        url: '',
 
         // Example mail config
         // Visit http://support.ghost.org/mail for instructions
@@ -79,28 +82,31 @@ config = {
         //  },
         // ```
         database: {
-            client: 'sqlite3',
+            client: '',
             connection: {
-                filename: path.join(__dirname, '/content/data/ghost.db')
-            },
-            debug: false
+                host     : '',
+                user     : '',
+                password : '',
+                database : '',
+                charset  : ''
+            }
         },
         server: {
             // Host to be passed to node's `net.Server#listen()`
-            host: '0.0.0.0',
+            host: '',
             // Port to be passed to node's `net.Server#listen()`, for iisnode set this to `process.env.PORT`
-            port: '2368'
+            port: ''
         },
         storage: {
-            provider: 'qiniu',
-            bucketname: 'edwardsblog',
-            ACCESS_KEY: 'yP2I3wsnk6XvD3fGV_Zl90O2T0JSplfCGRHD4yeg',
-            SECRET_KEY: 'R4P8c7VH8HN7rWZamz6IKu2hoBhB2bmDoswi0CQv',
-            root: '/image/',
-            prefix: 'http://edwardsblog.qiniudn.com'
+            provider: '',
+            bucketname: '',
+            ACCESS_KEY: '',
+            SECRET_KEY: '',
+            root: '',
+            prefix: ''
         },
         paths: {
-            contentPath: path.join(__dirname, '/content/')
+            contentPath: path.join(__dirname, '')
         }
     },
 
