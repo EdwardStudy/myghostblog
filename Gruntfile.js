@@ -7,16 +7,17 @@
 // **Debug tip:** If you have any problems with any Grunt tasks, try running them with the `--verbose` command
 
 // jshint unused: false
-var overrides      = require('./core/server/overrides'),
-    _              = require('lodash'),
-    chalk          = require('chalk'),
-    fs             = require('fs-extra'),
-    path           = require('path'),
+var overrides = require('./core/server/overrides'),
+    mozjpeg = require('imagemin-mozjpeg'),
+    _ = require('lodash'),
+    chalk = require('chalk'),
+    fs = require('fs-extra'),
+    path = require('path'),
 
-    escapeChar     = process.platform.match(/^win/) ? '^' : '\\',
-    cwd            = process.cwd().replace(/( |\(|\))/g, escapeChar + '$1'),
+    escapeChar = process.platform.match(/^win/) ? '^' : '\\',
+    cwd = process.cwd().replace(/( |\(|\))/g, escapeChar + '$1'),
     buildDirectory = path.resolve(cwd, '.build'),
-    distDirectory  = path.resolve(cwd, '.dist'),
+    distDirectory = path.resolve(cwd, '.dist'),
 
     // ## Grunt configuration
 
@@ -63,8 +64,8 @@ var overrides      = require('./core/server/overrides'),
                     }
                 },
                 express: {
-                    files:  ['core/ghost-server.js', 'core/server/**/*.js'],
-                    tasks:  ['express:dev'],
+                    files: ['core/ghost-server.js', 'core/server/**/*.js'],
+                    tasks: ['express:dev'],
                     options: {
                         spawn: false
                     }
@@ -302,6 +303,14 @@ var overrides      = require('./core/server/overrides'),
                     files: {
                         'core/shared/ghost-url.min.js': 'core/shared/ghost-url.js'
                     }
+                },
+                themes: {
+                    options: {
+                        sourceMap: false
+                    },
+                    files: {
+                        'content/themes/casper/assets/js/casper.min.js': ['content/themes/casper/assets/js/*.js', '!content/themes/casper/assets/js/*.min.js']
+                    }
                 }
             },
 
@@ -339,12 +348,41 @@ var overrides      = require('./core/server/overrides'),
                 test: {
                     'core/client': 'shell:test'
                 }
+            },
+            cssmin: {
+                themes: {
+                    files: [{
+                        expand: true,
+                        cwd: 'content/themes/casper/assets/css',
+                        src: ['*.css', '!*.min.css'],
+                        dest: 'content/themes/casper/assets/css',
+                        ext: '.min.css'
+                    }]
+                }
+            },
+            imagemin: {                          // Task
+                static: {                          // Target
+                    options: {                       // Target options
+                        optimizationLevel: 7,
+                        svgoPlugins: [{ removeViewBox: false }]
+                    },
+                    files: {                         // Dictionary of files
+                        'content/data/favicon.jpg': 'content/data/*.jpg'
+                    }
+                }
             }
         };
 
         // Load the configuration
         grunt.initConfig(cfg);
 
+        // min themes assets
+        grunt.loadNpmTasks('grunt-contrib-cssmin');
+        grunt.loadNpmTasks('grunt-contrib-uglify');
+        grunt.registerTask('compress-casper', 'Compress Casper theme\'s JS & CSS',
+            ['uglify:themes', 'cssmin:themes']);
+        grunt.loadNpmTasks('grunt-contrib-imagemin');
+        grunt.registerTask('compress-picture', 'Compress favicon', ['imagemin']);
         // # Custom Tasks
 
         // Ghost has a number of useful tasks that we use every day in development. Tasks marked as *Utility* are used
@@ -429,7 +467,7 @@ var overrides      = require('./core/server/overrides'),
         // in a "new" state.
         grunt.registerTask('cleanDatabase', function () {
             var done = this.async(),
-                models    = require('./core/server/models'),
+                models = require('./core/server/models'),
                 migration = require('./core/server/data/migration');
 
             migration.reset().then(function () {
@@ -718,7 +756,7 @@ var overrides      = require('./core/server/overrides'),
         //
         // Note that the current implementation of watch only works with casper, not other themes.
         grunt.registerTask('dev', 'Dev Mode; watch files and restart server on changes',
-           ['bgShell:client', 'express:dev', 'watch']);
+            ['bgShell:client', 'express:dev', 'watch']);
 
         // ### Release
         // Run `grunt release` to create a Ghost release zip file.
