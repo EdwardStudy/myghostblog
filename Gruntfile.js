@@ -367,7 +367,7 @@ var overrides = require('./core/server/overrides'),
                         svgoPlugins: [{ removeViewBox: false }]
                     },
                     files: {                         // Dictionary of files
-                        'content/data/favicon.jpg': 'content/data/*.jpg'
+                        'content/data/avatar.png': 'content/data/avatar.min.png'
                     }
                 }
             }

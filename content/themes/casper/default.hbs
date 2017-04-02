@@ -10,10 +10,16 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /> {{!-- Brand icon --}}
     <link rel="shortcut icon" href="http://edwardsblog.qiniudn.com/0/6d/3ad2e76ce64d5f292e1de76f57909.ico"> {{!-- Styles'n'Scripts --}}
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400"/>
-    <link rel="stylesheet" type="text/css" href="{{asset "css/screen.min.css"}}" /> {{!-- Ghost outputs important style and meta data with this tag --}}
-    <link href="//cdn.bootcss.com/lightbox2/2.9.0/css/lightbox.min.css" rel="stylesheet"> 
-    <link href="//cdn.bootcss.com/highlight.js/9.10.0/styles/darcula.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400s" media="none" onload="if(media!='all')media='all'">
+    <noscript><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400"></noscript>
+    <link rel="stylesheet" href="{{asset "css/screen.min.css"}}" media="none" onload="if(media!='all')media='all'">
+    <noscript><link rel="stylesheet" href="{{asset "css/screen.min.css"}}"></noscript>
+    <link rel="stylesheet" href="//cdn.bootcss.com/lightbox2/2.9.0/css/lightbox.min.css" media="none" onload="if(media!='all')media='all'">
+    <noscript><link rel="stylesheet" href="//cdn.bootcss.com/lightbox2/2.9.0/css/lightbox.min.css"></noscript>
+    <link href="" rel="stylesheet"> 
+    <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.10.0/styles/darcula.min.css" media="none" onload="if(media!='all')media='all'">
+    <noscript><link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.10.0/styles/darcula.min.css"></noscript>
     {{ghost_head}}
 </head>
 
