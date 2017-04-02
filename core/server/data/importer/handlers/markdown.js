@@ -83,7 +83,7 @@ processMarkdownFile = function (filename, content) {
 MarkdownHandler = {
     type: 'data',
     extensions: ['.md', '.markdown'],
-    contentTypes: ['application/octet-stream', 'text/plain'],
+    types: ['application/octet-stream', 'text/plain'],
     directories: [],
 
     loadFile: function (files, startDir) {

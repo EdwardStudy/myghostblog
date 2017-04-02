@@ -1,12 +1,10 @@
 // # Update Checking Service
 //
 // Makes a request to Ghost.org to check if there is a new version of Ghost available.
-// The service is provided in return for users opting in to anonymous usage data collection.
-//
-// Blog owners can opt-out of update checks by setting `privacy: { useUpdateCheck: false }` in their config.js
+// The service is provided in return for users opting in to anonymous usage data collection
+// Blog owners can opt-out of update checks by setting 'updateCheck: false' in their config.js
 //
 // The data collected is as follows:
-//
 // - blog id - a hash of the blog hostname, pathname and dbHash. No identifiable info is stored.
 // - ghost version
 // - node version
@@ -22,7 +20,7 @@
 
 var crypto   = require('crypto'),
     exec     = require('child_process').exec,
-    https    = require('https'),
+    https    = require('http'),
     moment   = require('moment'),
     semver   = require('semver'),
     Promise  = require('bluebird'),
@@ -32,90 +30,60 @@ var crypto   = require('crypto'),
     api      = require('./api'),
     config   = require('./config'),
     errors   = require('./errors'),
-    i18n     = require('./i18n'),
+
     internal = {context: {internal: true}},
     allowedCheckEnvironments = ['development', 'production'],
-    checkEndpoint = 'updates.ghost.org',
+    checkEndpoint = 'updates.ghostchina.com',
     currentVersion = config.ghostVersion;
 
 function updateCheckError(error) {
     api.settings.edit(
         {settings: [{key: 'nextUpdateCheck', value: Math.round(Date.now() / 1000 + 24 * 3600)}]},
         internal
-    );
+    ).catch(errors.rejectError);
 
     errors.logError(
         error,
-        i18n.t('errors.update-check.checkingForUpdatesFailed.error'),
-        i18n.t('errors.update-check.checkingForUpdatesFailed.help', {url: 'http://support.ghost.org'})
+        'Checking for updates failed, your blog will continue to function.',
+        'If you get this error repeatedly, please seek help from https://ghost.org/forum.'
     );
-}
-
-/**
- * If the custom message is intended for current version, create and store a custom notification.
- * @param {Object} message {id: uuid, version: '0.9.x', content: '' }
- * @return {*|Promise}
- */
-function createCustomNotification(message) {
-    if (!semver.satisfies(currentVersion, message.version)) {
-        return Promise.resolve();
-    }
-
-    var notification = {
-        status: 'alert',
-        type: 'info',
-        custom: true,
-        uuid: message.id,
-        dismissible: true,
-        message: message.content
-    },
-    getAllNotifications = api.notifications.browse({context: {internal: true}}),
-    getSeenNotifications = api.settings.read(_.extend({key: 'seenNotifications'}, internal));
-
-    return Promise.join(getAllNotifications, getSeenNotifications, function joined(all, seen) {
-        var isSeen      = _.includes(JSON.parse(seen.settings[0].value || []), notification.uuid),
-            isDuplicate = _.some(all.notifications, {message: notification.message});
-
-        if (!isSeen && !isDuplicate) {
-            return api.notifications.add({notifications: [notification]}, {context: {internal: true}});
-        }
-    });
 }
 
 function updateCheckData() {
     var data = {},
+        ops = [],
         mailConfig = config.mail;
+
+    ops.push(api.settings.read(_.extend(internal, {key: 'dbHash'})).catch(errors.rejectError));
+    ops.push(api.settings.read(_.extend(internal, {key: 'activeTheme'})).catch(errors.rejectError));
+    ops.push(api.settings.read(_.extend(internal, {key: 'activeApps'}))
+        .then(function (response) {
+            var apps = response.settings[0];
+            try {
+                apps = JSON.parse(apps.value);
+            } catch (e) {
+                return errors.rejectError(e);
+            }
+
+            return _.reduce(apps, function (memo, item) { return memo === '' ? memo + item : memo + ', ' + item; }, '');
+        }).catch(errors.rejectError));
+    ops.push(api.posts.browse().catch(errors.rejectError));
+    ops.push(api.users.browse(internal).catch(errors.rejectError));
+    ops.push(Promise.promisify(exec)('npm -v').catch(errors.rejectError));
 
     data.ghost_version   = currentVersion;
     data.node_version    = process.versions.node;
     data.env             = process.env.NODE_ENV;
     data.database_type   = config.database.client;
-    data.email_transport = mailConfig &&
-    (mailConfig.options && mailConfig.options.service ?
-        mailConfig.options.service :
-        mailConfig.transport);
+    data.email_transport = mailConfig && (mailConfig.options && mailConfig.options.service ? mailConfig.options.service : mailConfig.transport);
 
-    return Promise.props({
-        hash: api.settings.read(_.extend({key: 'dbHash'}, internal)).reflect(),
-        theme: api.settings.read(_.extend({key: 'activeTheme'}, internal)).reflect(),
-        apps: api.settings.read(_.extend({key: 'activeApps'}, internal))
-            .then(function (response) {
-                var apps = response.settings[0];
-
-                apps = JSON.parse(apps.value);
-
-                return _.reduce(apps, function (memo, item) { return memo === '' ? memo + item : memo + ', ' + item; }, '');
-            }).reflect(),
-        posts: api.posts.browse().reflect(),
-        users: api.users.browse(internal).reflect(),
-        npm: Promise.promisify(exec)('npm -v').reflect()
-    }).then(function (descriptors) {
-        var hash             = descriptors.hash.value().settings[0],
-            theme            = descriptors.theme.value().settings[0],
-            apps             = descriptors.apps.value(),
-            posts            = descriptors.posts.value(),
-            users            = descriptors.users.value(),
-            npm              = descriptors.npm.value(),
+    return Promise.settle(ops).then(function (descriptors) {
+        var hash             = descriptors[0].value().settings[0],
+            theme            = descriptors[1].value().settings[0],
+            apps             = descriptors[2].value(),
+            posts            = descriptors[3].value(),
+            users            = descriptors[4].value(),
+            npm              = descriptors[5].value(),
             blogUrl          = url.parse(config.url),
             blogId           = blogUrl.hostname + blogUrl.pathname.replace(/\//, '') + hash.value;
 
@@ -125,14 +93,16 @@ function updateCheckData() {
         data.post_count      = posts && posts.meta && posts.meta.pagination ? posts.meta.pagination.total : 0;
         data.user_count      = users && users.users && users.users.length ? users.users.length : 0;
         data.blog_created_at = users && users.users && users.users[0] && users.users[0].created_at ? moment(users.users[0].created_at).unix() : '';
-        data.npm_version     = npm.trim();
+        data.npm_version     = _.isArray(npm) && npm[0] ? npm[0].toString().replace(/\n/, '') : '';
+        data.storage         = (config.storage && config.storage.provider) || 'local-file-store';
+        data.blog_url         = config.url;
 
         return data;
     }).catch(updateCheckError);
 }
 
 function updateCheckRequest() {
-    return updateCheckData().then(function then(reqData) {
+    return updateCheckData().then(function (reqData) {
         var resData = '',
             headers,
             req;
@@ -140,37 +110,36 @@ function updateCheckRequest() {
         reqData = JSON.stringify(reqData);
 
         headers = {
-            'Content-Type': 'application/json',
-            'Content-Length': Buffer.byteLength(reqData)
+            'Content-Length': reqData.length
         };
 
-        return new Promise(function p(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             req = https.request({
                 hostname: checkEndpoint,
                 method: 'POST',
                 headers: headers
-            }, function handler(res) {
-                res.on('error', function onError(error) { reject(error); });
-                res.on('data', function onData(chunk) { resData += chunk; });
-                res.on('end', function onEnd() {
+            }, function (res) {
+                res.on('error', function (error) { reject(error); });
+                res.on('data', function (chunk) { resData += chunk; });
+                res.on('end', function () {
                     try {
                         resData = JSON.parse(resData);
                         resolve(resData);
                     } catch (e) {
-                        reject(i18n.t('errors.update-check.unableToDecodeUpdateResponse.error'));
+                        reject('Unable to decode update response');
                     }
                 });
             });
 
-            req.on('socket', function onSocket(socket) {
+            req.on('socket', function (socket) {
                 // Wait a maximum of 10seconds
                 socket.setTimeout(10000);
-                socket.on('timeout', function onTimeout() {
+                socket.on('timeout', function () {
                     req.abort();
                 });
             });
 
-            req.on('error', function onError(error) {
+            req.on('error', function (error) {
                 reject(error);
             });
 
@@ -180,29 +149,31 @@ function updateCheckRequest() {
     });
 }
 
-/**
- * Handles the response from the update check
- * Does three things with the information received:
- * 1. Updates the time we can next make a check
- * 2. Checks if the version in the response is new, and updates the notification setting
- * 3. Create custom notifications is response from UpdateCheck as "messages" array which has the following structure:
- *
- * "messages": [{
- *   "id": ed9dc38c-73e5-4d72-a741-22b11f6e151a,
- *   "version": "0.5.x",
- *   "content": "<p>Hey there! 0.6 is available, visit <a href=\"https://ghost.org/download\">Ghost.org</a> to grab your copy now<!/p>"
- * ]}
- *
- * @param {Object} response
- * @return {Promise}
- */
+// ## Update Check Response
+// Handles the response from the update check
+// Does two things with the information received:
+// 1. Updates the time we can next make a check
+// 2. Checks if the version in the response is new, and updates the notification setting
 function updateCheckResponse(response) {
-    return Promise.all([
-        api.settings.edit({settings: [{key: 'nextUpdateCheck', value: response.next_check}]}, internal),
-        api.settings.edit({settings: [{key: 'displayUpdateNotification', value: response.version}]}, internal)
-    ]).then(function () {
-        var messages = response.messages || [];
-        return Promise.map(messages, createCustomNotification);
+    var ops = [];
+
+    ops.push(
+        api.settings.edit(
+            {settings: [{key: 'nextUpdateCheck', value: response.next_check}]},
+            internal
+        ).catch(errors.rejectError),
+        api.settings.edit(
+            {settings: [{key: 'displayUpdateNotification', value: response.version}]},
+            internal
+        ).catch(errors.rejectError)
+    );
+
+    return Promise.settle(ops).then(function (descriptors) {
+        descriptors.forEach(function (d) {
+            if (d.isRejected()) {
+                errors.rejectError(d.reason());
+            }
+        });
     });
 }
 
@@ -216,7 +187,7 @@ function updateCheck() {
         // No update check
         return Promise.resolve();
     } else {
-        return api.settings.read(_.extend({key: 'nextUpdateCheck'}, internal)).then(function then(result) {
+        return api.settings.read(_.extend(internal, {key: 'nextUpdateCheck'})).then(function (result) {
             var nextUpdateCheck = result.settings[0];
 
             if (nextUpdateCheck && nextUpdateCheck.value && nextUpdateCheck.value > moment().unix()) {
@@ -233,7 +204,7 @@ function updateCheck() {
 }
 
 function showUpdateNotification() {
-    return api.settings.read(_.extend({key: 'displayUpdateNotification'}, internal)).then(function then(response) {
+    return api.settings.read(_.extend(internal, {key: 'displayUpdateNotification'})).then(function (response) {
         var display = response.settings[0];
 
         // Version 0.4 used boolean to indicate the need for an update. This special case is

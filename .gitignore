@@ -68,13 +68,9 @@ CHANGELOG.md
 
 config.js
 /core/client/config.js
-/content/data/*
 
 # Built asset files
 /core/built
 
 # Coverage reports
 coverage.html
-
-# private params
-./config.js

@@ -4,7 +4,7 @@
 function NoPermissionError(message) {
     this.message = message;
     this.stack = new Error().stack;
-    this.statusCode = 403;
+    this.code = 403;
     this.errorType = this.name;
 }
 

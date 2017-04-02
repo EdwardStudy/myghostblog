@@ -2,10 +2,9 @@ var _           = require('lodash'),
     api         = require('../api'),
     helpers     = require('../helpers'),
     filters     = require('../filters'),
-    i18n        = require('../i18n'),
     generateProxyFunctions;
 
-generateProxyFunctions = function (name, permissions, isInternal) {
+generateProxyFunctions = function (name, permissions) {
     var getPermission = function (perm) {
             return permissions[perm];
         },
@@ -21,15 +20,10 @@ generateProxyFunctions = function (name, permissions, isInternal) {
             });
         },
         runIfPermissionToMethod = function (perm, method, wrappedFunc, context, args) {
-            // internal apps get all permissions
-            if (isInternal) {
-                return wrappedFunc.apply(context, args);
-            }
-
             var permValue = getPermissionToMethod(perm, method);
 
             if (!permValue) {
-                throw new Error(i18n.t('errors.apps.accessResourceWithoutPermission.error', {name:name, perm: perm, method: method}));
+                throw new Error('The App "' + name + '" attempted to perform an action or access a resource (' + perm + '.' + method + ') without permission.');
             }
 
             return wrappedFunc.apply(context, args);
@@ -90,14 +84,14 @@ generateProxyFunctions = function (name, permissions, isInternal) {
 
 function AppProxy(options) {
     if (!options.name) {
-        throw new Error(i18n.t('errors.apps.mustProvideAppName.error'));
+        throw new Error('Must provide an app name for api context');
     }
 
     if (!options.permissions) {
-        throw new Error(i18n.t('errors.apps.mustProvideAppPermissions.error'));
+        throw new Error('Must provide app permissions');
     }
 
-    _.extend(this, generateProxyFunctions(options.name, options.permissions, options.internal));
+    _.extend(this, generateProxyFunctions(options.name, options.permissions));
 }
 
 module.exports = AppProxy;

@@ -2,7 +2,6 @@ var _              = require('lodash'),
     errors         = require('../errors'),
     ghostBookshelf = require('./base'),
     Promise        = require('bluebird'),
-    i18n           = require('../i18n'),
 
     Role,
     Roles;
@@ -11,11 +10,11 @@ Role = ghostBookshelf.Model.extend({
 
     tableName: 'roles',
 
-    users: function users() {
+    users: function () {
         return this.belongsToMany('User');
     },
 
-    permissions: function permissions() {
+    permissions: function () {
         return this.belongsToMany('Permission');
     }
 }, {
@@ -24,14 +23,13 @@ Role = ghostBookshelf.Model.extend({
     * @param {String} methodName The name of the method to check valid options for.
     * @return {Array} Keys allowed in the `options` hash of the model's method.
     */
-    permittedOptions: function permittedOptions(methodName) {
+    permittedOptions: function (methodName) {
         var options = ghostBookshelf.Model.permittedOptions(),
 
             // whitelists for the `options` hash argument on methods, by method name.
             // these are the only options that can be passed to Bookshelf / Knex.
             validOptions = {
-                findOne: ['withRelated'],
-                findAll: ['withRelated']
+                findOne: ['withRelated']
             };
 
         if (validOptions[methodName]) {
@@ -41,7 +39,7 @@ Role = ghostBookshelf.Model.extend({
         return options;
     },
 
-    permissible: function permissible(roleModelOrId, action, context, loadedPermissions, hasUserPermission, hasAppPermission) {
+    permissible: function (roleModelOrId, action, context, loadedPermissions, hasUserPermission, hasAppPermission) {
         var self = this,
             checkAgainst = [],
             origArgs;
@@ -51,8 +49,8 @@ Role = ghostBookshelf.Model.extend({
         if (_.isNumber(roleModelOrId) || _.isString(roleModelOrId)) {
             // Grab the original args without the first one
             origArgs = _.toArray(arguments).slice(1);
-            // Get the actual role model
-            return this.findOne({id: roleModelOrId, status: 'all'}).then(function then(foundRoleModel) {
+            // Get the actual post model
+            return this.findOne({id: roleModelOrId, status: 'all'}).then(function (foundRoleModel) {
                 // Build up the original args but substitute with actual model
                 var newArgs = [foundRoleModel].concat(origArgs);
 
@@ -61,23 +59,23 @@ Role = ghostBookshelf.Model.extend({
         }
 
         if (action === 'assign' && loadedPermissions.user) {
-            if (_.some(loadedPermissions.user.roles, {name: 'Owner'})) {
+            if (_.any(loadedPermissions.user.roles, {name: 'Owner'})) {
                 checkAgainst = ['Owner', 'Administrator', 'Editor', 'Author'];
-            } else if (_.some(loadedPermissions.user.roles, {name: 'Administrator'})) {
+            } else if (_.any(loadedPermissions.user.roles, {name: 'Administrator'})) {
                 checkAgainst = ['Administrator', 'Editor', 'Author'];
-            } else if (_.some(loadedPermissions.user.roles, {name: 'Editor'})) {
+            } else if (_.any(loadedPermissions.user.roles, {name: 'Editor'})) {
                 checkAgainst = ['Author'];
             }
 
             // Role in the list of permissible roles
-            hasUserPermission = roleModelOrId && _.includes(checkAgainst, roleModelOrId.get('name'));
+            hasUserPermission = roleModelOrId && _.contains(checkAgainst, roleModelOrId.get('name'));
         }
 
         if (hasUserPermission && hasAppPermission) {
             return Promise.resolve();
         }
 
-        return Promise.reject(new errors.NoPermissionError(i18n.t('errors.models.role.notEnoughPermission')));
+        return Promise.reject();
     }
 });
 

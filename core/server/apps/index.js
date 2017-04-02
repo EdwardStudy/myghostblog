@@ -4,8 +4,6 @@ var _           = require('lodash'),
     errors      = require('../errors'),
     api         = require('../api'),
     loader      = require('./loader'),
-    i18n        = require('../i18n'),
-    config      = require('../config'),
     // Holds the available apps
     availableApps = {};
 
@@ -21,13 +19,13 @@ function getInstalledApps() {
             return Promise.reject(e);
         }
 
-        return installed.concat(config.internalApps);
+        return installed;
     });
 }
 
 function saveInstalledApps(installedApps) {
     return getInstalledApps().then(function (currentInstalledApps) {
-        var updatedAppsInstalled = _.difference(_.uniq(installedApps.concat(currentInstalledApps)), config.internalApps);
+        var updatedAppsInstalled = _.uniq(installedApps.concat(currentInstalledApps));
 
         return api.settings.edit({settings: [{key: 'installedApps', value: updatedAppsInstalled}]}, {context: {internal: true}});
     });
@@ -43,14 +41,12 @@ module.exports = {
                 var aApps = response.settings[0];
 
                 appsToLoad = JSON.parse(aApps.value) || [];
-
-                appsToLoad = appsToLoad.concat(config.internalApps);
             });
         } catch (e) {
             errors.logError(
-                i18n.t('errors.apps.failedToParseActiveAppsSettings.error', {message: e.message}),
-                i18n.t('errors.apps.failedToParseActiveAppsSettings.context'),
-                i18n.t('errors.apps.failedToParseActiveAppsSettings.help')
+                'Failed to parse activeApps setting value: ' + e.message,
+                'Your apps will not be loaded.',
+                'Check your settings table for typos in the activeApps value. It should look like: ["app-1", "app2"] (double quotes required).'
             );
 
             return Promise.resolve();
@@ -67,7 +63,7 @@ module.exports = {
                 },
                 loadPromises = _.map(appsToLoad, function (app) {
                     // If already installed, just activate the app
-                    if (_.includes(installedApps, app)) {
+                    if (_.contains(installedApps, app)) {
                         return loader.activateAppByName(app).then(function (loadedApp) {
                             return recordLoadedApp(app, loadedApp);
                         });
@@ -90,8 +86,8 @@ module.exports = {
             }).catch(function (err) {
                 errors.logError(
                     err.message || err,
-                    i18n.t('errors.apps.appWillNotBeLoaded.error'),
-                    i18n.t('errors.apps.appWillNotBeLoaded.help')
+                    'The app will not be loaded',
+                    'Check with the app creator, or read the app documentation for more details on app requirements'
                 );
             });
         });

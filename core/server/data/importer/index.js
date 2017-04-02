@@ -6,15 +6,14 @@ var _            = require('lodash'),
     path         = require('path'),
     os           = require('os'),
     glob         = require('glob'),
-    uuid         = require('uuid'),
-    extract      = require('extract-zip-fork'),
+    uuid         = require('node-uuid'),
+    extract      = require('extract-zip'),
     errors       = require('../../errors'),
     ImageHandler    = require('./handlers/image'),
     JSONHandler     = require('./handlers/json'),
     MarkdownHandler = require('./handlers/markdown'),
     ImageImporter   = require('./importers/image'),
     DataImporter    = require('./importers/data'),
-    i18n            = require('../../i18n'),
 
     // Glob levels
     ROOT_ONLY = 0,
@@ -25,7 +24,7 @@ var _            = require('lodash'),
 
 defaults = {
     extensions: ['.zip'],
-    contentTypes: ['application/zip', 'application/x-zip-compressed'],
+    types: ['application/zip', 'application/x-zip-compressed'],
     directories: []
 };
 
@@ -49,21 +48,21 @@ _.extend(ImportManager.prototype, {
      * @returns {string[]}
      */
     getExtensions: function () {
-        return _.flatten(_.union(_.map(this.handlers, 'extensions'), defaults.extensions));
+        return _.flatten(_.union(_.pluck(this.handlers, 'extensions'), defaults.extensions));
     },
     /**
      * Get an array of all the mime types for which we have handlers
      * @returns {string[]}
      */
-    getContentTypes: function () {
-        return _.flatten(_.union(_.map(this.handlers, 'contentTypes'), defaults.contentTypes));
+    getTypes: function () {
+        return _.flatten(_.union(_.pluck(this.handlers, 'types'), defaults.types));
     },
     /**
      * Get an array of directories for which we have handlers
      * @returns {string[]}
      */
     getDirectories: function () {
-        return _.flatten(_.union(_.map(this.handlers, 'directories'), defaults.directories));
+        return _.flatten(_.union(_.pluck(this.handlers, 'directories'), defaults.directories));
     },
     /**
      * Convert items into a glob string
@@ -108,8 +107,7 @@ _.extend(ImportManager.prototype, {
             _.each(filesToDelete, function (fileToDelete) {
                 fs.remove(fileToDelete, function (err) {
                     if (err) {
-                        errors.logError(err, i18n.t('errors.data.importer.index.couldNotCleanUpFile.error'),
-                                        i18n.t('errors.data.importer.index.couldNotCleanUpFile.context'));
+                        errors.logError(err, 'Import could not clean up file ', 'Your blog will continue to work as expected');
                     }
                 });
             });
@@ -122,7 +120,7 @@ _.extend(ImportManager.prototype, {
      * @returns Boolean
      */
     isZip: function (ext) {
-        return _.includes(defaults.extensions, ext);
+        return _.contains(defaults.extensions, ext);
     },
     /**
      * Checks the content of a zip folder to see if it is valid.
@@ -149,7 +147,7 @@ _.extend(ImportManager.prototype, {
         // This is a temporary extra message for the old format roon export which doesn't work with Ghost
         if (oldRoonMatches.length > 0) {
             throw new errors.UnsupportedMediaTypeError(
-                i18n.t('errors.data.importer.index.unsupportedRoonExport')
+                'Your zip file looks like an old format Roon export, please re-export your Roon blog and try again.'
             );
         }
 
@@ -159,12 +157,10 @@ _.extend(ImportManager.prototype, {
         }
 
         if (extMatchesAll.length < 1) {
-            throw new errors.UnsupportedMediaTypeError(
-                i18n.t('errors.data.importer.index.noContentToImport'));
+            throw new errors.UnsupportedMediaTypeError('Zip did not include any content to import.');
         }
 
-        throw new errors.UnsupportedMediaTypeError(
-            i18n.t('errors.data.importer.index.invalidZipStructure'));
+        throw new errors.UnsupportedMediaTypeError('Invalid zip file structure.');
     },
     /**
      * Use the extract module to extract the given zip file to a temp directory & return the temp directory path
@@ -211,8 +207,9 @@ _.extend(ImportManager.prototype, {
             this.getExtensionGlob(this.getExtensions(), ALL_DIRS), {cwd: directory}
         );
         if (extMatchesAll.length < 1 || extMatchesAll[0].split('/') < 1) {
-            throw new errors.ValidationError(i18n.t('errors.data.importer.index.invalidZipFileBaseDirectory'));
+            throw new errors.ValidationError('Invalid zip file: base directory read failed');
         }
+
         return extMatchesAll[0].split('/')[0];
     },
     /**
@@ -239,7 +236,7 @@ _.extend(ImportManager.prototype, {
                 if (importData.hasOwnProperty(handler.type)) {
                     // This limitation is here to reduce the complexity of the importer for now
                     return Promise.reject(new errors.UnsupportedMediaTypeError(
-                        i18n.t('errors.data.importer.index.zipContainsMultipleDataFormats')
+                        'Zip file contains multiple data formats. Please split up and import separately.'
                     ));
                 }
 
@@ -256,7 +253,7 @@ _.extend(ImportManager.prototype, {
 
             if (ops.length === 0) {
                 return Promise.reject(new errors.UnsupportedMediaTypeError(
-                    i18n.t('errors.data.importer.index.noContentToImport')
+                    'Zip did not include any content to import.'
                 ));
             }
 
@@ -276,7 +273,7 @@ _.extend(ImportManager.prototype, {
      */
     processFile: function (file, ext) {
         var fileHandler = _.find(this.handlers, function (handler) {
-            return _.includes(handler.extensions, ext);
+            return _.contains(handler.extensions, ext);
         });
 
         return fileHandler.loadFile([_.pick(file, 'name', 'path')]).then(function (loadedData) {

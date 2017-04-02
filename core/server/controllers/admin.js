@@ -1,58 +1,52 @@
 var _             = require('lodash'),
-    Promise       = require('bluebird'),
     api           = require('../api'),
     errors        = require('../errors'),
     updateCheck   = require('../update-check'),
-    i18n          = require('../i18n'),
+    config        = require('../config'),
     adminControllers;
 
 adminControllers = {
     // Route: index
     // Path: /ghost/
     // Method: GET
-    index: function index(req, res) {
+    index: function (req, res) {
         /*jslint unparam:true*/
 
         function renderIndex() {
-            var configuration,
-                fetch = {
-                    configuration: api.configuration.read().then(function (res) { return res.configuration[0]; }),
-                    client: api.clients.read({slug: 'ghost-admin'}).then(function (res) { return res.clients[0]; })
-                };
-
-            return Promise.props(fetch).then(function renderIndex(result) {
-                configuration = result.configuration;
-
-                configuration.clientId = {value: result.client.slug, type: 'string'};
-                configuration.clientSecret = {value: result.client.secret, type: 'string'};
+            return api.configuration.browse().then(function (data) {
+                var apiConfig = _.omit(data.configuration, function (value) {
+                    return _.contains(['environment', 'database', 'mail', 'version'], value.key);
+                });
 
                 res.render('default', {
-                    configuration: configuration
+                    skip_google_fonts: config.isPrivacyDisabled('useGoogleFonts'),
+                    configuration: apiConfig
                 });
             });
         }
 
-        updateCheck().then(function then() {
+        updateCheck().then(function () {
             return updateCheck.showUpdateNotification();
-        }).then(function then(updateVersion) {
+        }).then(function (updateVersion) {
             if (!updateVersion) {
                 return;
             }
 
             var notification = {
-                status: 'alert',
-                type: 'info',
-                location: 'upgrade.new-version-available',
+                type: 'success',
+                location: 'top',
                 dismissible: false,
-                message: i18n.t('notices.controllers.newVersionAvailable',
-                                {version: updateVersion, link: '<a href="http://support.ghost.org/how-to-upgrade/" target="_blank">Click here</a>'})};
+                status: 'persistent',
+                message: '有 <a href="http://www.ghostchina.com/download/" target="_blank">Ghost ' + updateVersion +
+                '</a> 新版本可以升级！请赶紧 <a href="http://www.ghostchina.com/download/" target="_blank">升级</a> 吧。'
+            };
 
-            return api.notifications.browse({context: {internal: true}}).then(function then(results) {
+            return api.notifications.browse({context: {internal: true}}).then(function (results) {
                 if (!_.some(results.notifications, {message: notification.message})) {
                     return api.notifications.add({notifications: [notification]}, {context: {internal: true}});
                 }
             });
-        }).finally(function noMatterWhat() {
+        }).finally(function () {
             renderIndex();
         }).catch(errors.logError);
     }

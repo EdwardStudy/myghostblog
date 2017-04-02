@@ -6,12 +6,37 @@
 // We use the name meta_description to match the helper for consistency:
 // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
 
-var getMetaDataDescription = require('../data/meta/description');
+var _           = require('lodash'),
+    config      = require('../config'),
+    filters     = require('../filters'),
+    meta_description;
 
-function meta_description(options) {
+meta_description = function (options) {
     options = options || {};
 
-    return getMetaDataDescription(this, options.data.root) || '';
-}
+    var context = options.data.root.context,
+        description;
+
+    if (this.meta_description) {
+        description = this.meta_description;  // E.g. in {{#foreach}}
+    } else if (_.contains(context, 'paged')) {
+        description = '';
+    } else if (_.contains(context, 'home')) {
+        description = config.theme.description;
+    } else if (_.contains(context, 'author') && this.author) {
+        description = this.author.bio;
+    } else if (_.contains(context, 'tag') && this.tag) {
+        description = this.tag.meta_description;
+    } else if (_.contains(context, 'post') && this.post) {
+        description = this.post.meta_description;
+    } else if (_.contains(context, 'page') && this.page) {
+        description = this.page.meta_description;
+    }
+
+    return filters.doFilter('meta_description', description).then(function (description) {
+        description = description || '';
+        return description.trim();
+    });
+};
 
 module.exports = meta_description;

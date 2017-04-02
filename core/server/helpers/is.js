@@ -3,7 +3,6 @@
 // Checks whether we're in a given context.
 var _               = require('lodash'),
     errors          = require('../errors'),
-    i18n            = require('../i18n'),
     is;
 
 is = function (context, options) {
@@ -12,7 +11,7 @@ is = function (context, options) {
     var currentContext = options.data.root.context;
 
     if (!_.isString(context)) {
-        errors.logWarn(i18n.t('warnings.helpers.is.invalidAttribute'));
+        errors.logWarn('Invalid or no attribute given to is helper');
         return;
     }
 
@@ -20,7 +19,7 @@ is = function (context, options) {
         return expr.split(',').map(function (v) {
             return v.trim();
         }).reduce(function (p, c) {
-            return p || _.includes(currentContext, c);
+            return p || _.contains(currentContext, c);
         }, false);
     }
 

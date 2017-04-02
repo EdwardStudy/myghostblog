@@ -4,7 +4,6 @@
 
 var _               = require('lodash'),
     hbs             = require('express-hbs'),
-    i18n            = require('../i18n'),
 
     errors          = require('../errors'),
     template        = require('./template'),
@@ -14,18 +13,17 @@ navigation = function (options) {
     /*jshint unused:false*/
     var navigationData = options.data.blog.navigation,
         currentUrl = options.data.root.relativeUrl,
-        self = this,
         output,
-        data;
+        context;
 
     if (!_.isObject(navigationData) || _.isFunction(navigationData)) {
-        return errors.logAndThrowError(i18n.t('warnings.helpers.navigation.invalidData'));
+        return errors.logAndThrowError('navigation data is not an object or is a function');
     }
 
     if (navigationData.filter(function (e) {
         return (_.isUndefined(e.label) || _.isUndefined(e.url));
     }).length > 0) {
-        return errors.logAndThrowError(i18n.t('warnings.helpers.navigation.valuesMustBeDefined'));
+        return errors.logAndThrowError('All values must be defined for label, url and current');
     }
 
     // check for non-null string values
@@ -33,22 +31,11 @@ navigation = function (options) {
         return ((!_.isNull(e.label) && !_.isString(e.label)) ||
             (!_.isNull(e.url) && !_.isString(e.url)));
     }).length > 0) {
-        return errors.logAndThrowError(i18n.t('warnings.helpers.navigation.valuesMustBeString'));
+        return errors.logAndThrowError('Invalid value, Url and Label must be strings');
     }
 
     function _slugify(label) {
         return label.toLowerCase().replace(/[^\w ]+/g, '').replace(/ +/g, '-');
-    }
-
-    // strips trailing slashes and compares urls
-    function _isCurrentUrl(href, currentUrl) {
-        if (!currentUrl) {
-            return false;
-        }
-
-        var strippedHref = href.replace(/\/+$/, ''),
-            strippedCurrentUrl = currentUrl.replace(/\/+$/, '');
-        return strippedHref === strippedCurrentUrl;
     }
 
     // {{navigation}} should no-op if no data passed in
@@ -58,17 +45,16 @@ navigation = function (options) {
 
     output = navigationData.map(function (e) {
         var out = {};
-        out.current = _isCurrentUrl(e.url, currentUrl);
+        out.current = e.url === currentUrl;
         out.label = e.label;
         out.slug = _slugify(e.label);
-        out.url = e.url;
-        out.secure = self.secure;
+        out.url = hbs.handlebars.Utils.escapeExpression(e.url);
         return out;
     });
 
-    data = _.merge({}, {navigation: output});
+    context = _.merge({}, {navigation: output});
 
-    return template.execute('navigation', data, options);
+    return template.execute('navigation', context, options);
 };
 
 module.exports = navigation;

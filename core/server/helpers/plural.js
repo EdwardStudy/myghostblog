@@ -11,21 +11,20 @@
 var hbs             = require('express-hbs'),
     errors          = require('../errors'),
     _               = require('lodash'),
-    i18n            = require('../i18n'),
     plural;
 
-plural = function (number, options) {
+plural = function (context, options) {
     if (_.isUndefined(options.hash) || _.isUndefined(options.hash.empty) ||
         _.isUndefined(options.hash.singular) || _.isUndefined(options.hash.plural)) {
-        return errors.logAndThrowError(i18n.t('warnings.helpers.plural.valuesMustBeDefined'));
+        return errors.logAndThrowError('All values must be defined for empty, singular and plural');
     }
 
-    if (number === 0) {
-        return new hbs.handlebars.SafeString(options.hash.empty.replace('%', number));
-    } else if (number === 1) {
-        return new hbs.handlebars.SafeString(options.hash.singular.replace('%', number));
-    } else if (number >= 2) {
-        return new hbs.handlebars.SafeString(options.hash.plural.replace('%', number));
+    if (context === 0) {
+        return new hbs.handlebars.SafeString(options.hash.empty);
+    } else if (context === 1) {
+        return new hbs.handlebars.SafeString(options.hash.singular.replace('%', context));
+    } else if (context >= 2) {
+        return new hbs.handlebars.SafeString(options.hash.plural.replace('%', context));
     }
 };
 

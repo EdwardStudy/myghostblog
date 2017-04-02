@@ -1,38 +1,35 @@
 // # Date Helper
 // Usage: `{{date format="DD MM, YYYY"}}`, `{{date updated_at format="DD MM, YYYY"}}`
 //
-// Formats a date using moment-timezone.js. Formats published_at by default but will also take a date as a parameter
+// Formats a date using moment.js. Formats published_at by default but will also take a date as a parameter
 
-var moment          = require('moment-timezone'),
-    date,
-    timezone;
+var moment          = require('moment'),
+    date;
 
-date = function (date, options) {
-    if (!options && date.hasOwnProperty('hash')) {
-        options = date;
-        date = undefined;
-        timezone = options.data.blog.timezone;
+date = function (context, options) {
+    if (!options && context.hasOwnProperty('hash')) {
+        options = context;
+        context = undefined;
 
         // set to published_at by default, if it's available
         // otherwise, this will print the current date
         if (this.published_at) {
-            date = moment(this.published_at).tz(timezone).format();
+            context = this.published_at;
         }
     }
 
     // ensure that context is undefined, not null, as that can cause errors
-    date = date === null ? undefined : date;
+    context = context === null ? undefined : context;
 
-    var f = options.hash.format || 'MMM DD, YYYY',
+    var f = options.hash.format || 'MMM Do, YYYY',
         timeago = options.hash.timeago,
-        timeNow = moment().tz(timezone);
+        date;
 
     if (timeago) {
-        date = timezone ?  moment(date).tz(timezone).from(timeNow) : moment(date).fromNow();
+        date = moment(context).fromNow();
     } else {
-        date = timezone ? moment(date).tz(timezone).format(f) : moment(date).format(f);
+        date = moment(context).format(f);
     }
-
     return date;
 };
 

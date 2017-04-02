@@ -4,7 +4,7 @@
 function RequestEntityTooLargeError(message) {
     this.message = message;
     this.stack = new Error().stack;
-    this.statusCode = 413;
+    this.code = 413;
     this.errorType = this.name;
 }
 
