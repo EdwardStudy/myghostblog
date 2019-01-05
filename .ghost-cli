@@ -1,5 +1,7 @@
 {
-  "active-version": "1.25.6",
+  "active-version": "2.9.1",
   "cli-version": "1.9.8",
-  "name": "localhost"
+  "name": "localhost",
+  "previous-version": "1.25.6",
+  "running": "development"
 }
