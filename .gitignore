@@ -76,4 +76,5 @@ config.js
 coverage.html
 
 # private params
-./config.js
+/config.production.json
+.ghost-cli
