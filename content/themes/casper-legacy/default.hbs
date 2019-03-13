@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" /> {{!-- Page Meta --}}
     <title>{{meta_title}}</title>
-    <meta name="description" content="{{meta_description}}" /> {{!-- Mobile Meta --}}
+    <!--<meta name="description" content="{{meta_description}}" /> {{!-- Mobile Meta --}}-->
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /> {{!-- Brand icon --}}
     <link rel="shortcut icon" href="//edwardsblog.qiniudn.com/0/6d/3ad2e76ce64d5f292e1de76f57909.ico"> {{!-- Styles'n'Scripts --}}
@@ -20,6 +20,9 @@
     <link href="" rel="stylesheet"> 
     <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.10.0/styles/darcula.min.css" media="none" onload="if(media!='all')media='all'">
     <noscript><link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.10.0/styles/darcula.min.css"></noscript>
+
+    {{!-- This tag outputs SEO meta+structured data and other important settings --}}
+    {{ghost_head}}
 </head>
 
 <body class="{{body_class}} nav-closed">
